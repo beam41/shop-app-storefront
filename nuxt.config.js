@@ -29,7 +29,11 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: [
+    './assets/styles/bulma.scss',
+    './assets/styles/global.scss',
+    './assets/fonts/Anuphan/stylesheet.css',
+  ],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
@@ -46,15 +50,13 @@ export default {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
+    'nuxt-purgecss',
+    '@nuxtjs/svg',
   ],
   /*
    ** Nuxt.js modules
    */
-  modules: [
-    // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
-    '@nuxtjs/bulma',
-    '@nuxtjs/pwa',
-  ],
+  modules: ['@nuxtjs/pwa'],
   /*
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
@@ -67,5 +69,13 @@ export default {
         },
       },
     },
+    loaders: {
+      scss: {
+        implementation: require('sass'),
+      },
+    },
+  },
+  router: {
+    linkExactActiveClass: 'is-active',
   },
 }

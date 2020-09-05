@@ -1,55 +1,66 @@
 <template>
   <div>
-    <Nuxt />
+    <nav class="navbar is-white">
+      <div class="navbar-brand">
+        <nuxt-link class="navbar-item" to="/">Shop-app</nuxt-link>
+        <a
+          :class="['navbar-burger', 'burger', isActive ? 'is-active' : null]"
+          @click="
+            () => {
+              isActive = !isActive
+            }
+          "
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div :class="['navbar-menu', isActive ? 'is-active' : null]">
+        <div class="navbar-start">
+          <nuxt-link to="/" class="navbar-item">หน้าแรก</nuxt-link>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">รายการสินค้า</a>
+            <div class="navbar-dropdown">
+              <nuxt-link to="/product-list/กำไล" class="navbar-item">
+                กำไล
+              </nuxt-link>
+              <nuxt-link to="/product-list/สร้อยคอ" class="navbar-item">
+                สร้อยคอ
+              </nuxt-link>
+              <nuxt-link to="/product-list/ต่างหู" class="navbar-item">
+                ต่างหู
+              </nuxt-link>
+            </div>
+          </div>
+          <nuxt-link to="/promotion" class="navbar-item">โปรโมชั่น</nuxt-link>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <nuxt-link to="/register" class="button is-dark">
+                สมัครสมาชิก
+              </nuxt-link>
+              <nuxt-link to="/login" class="button is-light">
+                เข้าสู่ระบบ
+              </nuxt-link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div>
+      <Nuxt />
+    </div>
   </div>
 </template>
 
-<style>
-html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
+<script>
+export default {
+  data: () => ({
+    isActive: false,
+  }),
 }
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-}
-
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
-}
-</style>
+</script>

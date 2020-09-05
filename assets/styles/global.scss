@@ -1,0 +1,40 @@
+.flex {
+  display: flex;
+}
+
+.flex-align-center {
+  align-items: center;
+}
+
+.flex-justify-center {
+  justify-content: center;
+}
+
+.flex-justify-end {
+  justify-content: flex-end;
+}
+
+.flex-space-between {
+  justify-content: space-between;
+}
+
+.text-margin-half {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.text-margin-full {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.svg-as-font {
+  margin-bottom: -4px;
+  path:not([fill='none']) {
+    fill: currentColor;
+  }
+}
+
+.content-container {
+  padding: 16px;
+}
