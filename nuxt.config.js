@@ -82,4 +82,7 @@ export default {
   loading: {
     color: 'hsl(0, 0%, 21%)',
   },
+  env: {
+    endpoint: process.env.ENDPOINT,
+  },
 }

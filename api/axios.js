@@ -5,7 +5,7 @@ const axios = { instance: null }
 
 export const createInstance = ({ store }) => {
   axios.instance = _axios.create({
-    baseURL: process.env.ENDPOINT,
+    baseURL: process.env.endpoint,
   })
 }
 
