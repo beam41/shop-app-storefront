@@ -2,7 +2,7 @@
   <div class="display-card">
     <component
       :is="headerTag"
-      class="text-margin-half is-size-3 has-text-centered has-text-weight-medium"
+      class="has-text-grey-darker text-margin-half is-size-3 has-text-centered has-text-weight-medium"
     >
       {{ header }}
     </component>
@@ -22,12 +22,13 @@
         <div class="card-content">
           <div class="content has-text-centered">
             <h3 class="is-size-5">{{ item.name }}</h3>
-            <p :class="['text-price', item.oldPrice ? 'promotion' : null]">
-              <span v-if="item.oldPrice" class="old-price"
-                >{{ item.oldPrice }} บาท</span
+            <p v-if="item.newPrice" class="text-price promotion">
+              <span v-if="item.price" class="old-price"
+                >{{ item.price }} บาท</span
               >
-              {{ item.price }} บาท
+              {{ item.newPrice }} บาท
             </p>
+            <p v-else class="text-price">{{ item.price }} บาท</p>
           </div>
         </div>
       </nuxt-link>
@@ -61,6 +62,7 @@ export default {
     },
     itemsList: {
       type: Array,
+      default: null,
       required: true,
     },
     showMorePath: {

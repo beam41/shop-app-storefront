@@ -38,7 +38,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [],
+  plugins: [{ src: './plugins/axios.js', mode: 'client' }],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -52,6 +52,7 @@ export default {
     '@nuxtjs/eslint-module',
     'nuxt-purgecss',
     '@nuxtjs/svg',
+    '@nuxtjs/dotenv',
   ],
   /*
    ** Nuxt.js modules
@@ -77,5 +78,8 @@ export default {
   },
   router: {
     linkExactActiveClass: 'is-active',
+  },
+  loading: {
+    color: 'hsl(0, 0%, 21%)',
   },
 }

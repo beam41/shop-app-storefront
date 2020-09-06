@@ -2,7 +2,9 @@
   <div class="box regis-card">
     <form @submit.prevent>
       <div class="field">
-        <h1 class="is-size-4 has-text-centered has-text-weight-medium">
+        <h1
+          class="has-text-grey-darker is-size-4 has-text-centered has-text-weight-medium"
+        >
           สมัครสมาชิก
         </h1>
       </div>

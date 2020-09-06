@@ -1,74 +1,29 @@
 <template>
-  <div class="container content-container">
+  <div v-if="promotions" class="container content-container">
     <ProductDisplay
-      header="กำไล"
-      :items-list="recommend"
-      desc="ลดราคาสินค้าที่ร่วมรายการทุกชิ้น 25 บาท"
+      v-for="promo in promotions"
+      :key="promo.id"
+      :header="promo.name"
+      :items-list="promo.productList"
+      :desc="promo.description"
     />
+  </div>
+  <div v-else class="container">
+    <Loader style="min-height: calc(100vh - 3.5rem)" />
   </div>
 </template>
 
 <script>
+import { getAllPromotionAndProduct } from '@/api/product'
+
 export default {
   data: () => ({
-    recommend: [
-      {
-        id: 1,
-        name: 'Lorem',
-        image: require('@/assets/images/placeholder.jpg'),
-        oldPrice: 700,
-        price: 500,
-      },
-      {
-        id: 2,
-        name: 'Lorem',
-        image: require('@/assets/images/placeholder.jpg'),
-        oldPrice: 700,
-        price: 500,
-      },
-      {
-        id: 3,
-        name: 'Lorem',
-        image: require('@/assets/images/placeholder.jpg'),
-        oldPrice: 700,
-        price: 500,
-      },
-      {
-        id: 4,
-        name: 'Lorem',
-        image: require('@/assets/images/placeholder.jpg'),
-        oldPrice: 700,
-        price: 500,
-      },
-      {
-        id: 5,
-        name: 'Lorem',
-        image: require('@/assets/images/placeholder.jpg'),
-        oldPrice: 700,
-        price: 500,
-      },
-      {
-        id: 6,
-        name: 'Lorem',
-        image: require('@/assets/images/placeholder.jpg'),
-        oldPrice: 700,
-        price: 500,
-      },
-      {
-        id: 7,
-        name: 'Lorem',
-        image: require('@/assets/images/placeholder.jpg'),
-        oldPrice: 700,
-        price: 500,
-      },
-      {
-        id: 8,
-        name: 'Lorem',
-        image: require('@/assets/images/placeholder.jpg'),
-        oldPrice: 700,
-        price: 500,
-      },
-    ],
+    promotions: null,
   }),
+  mounted() {
+    getAllPromotionAndProduct().then((res) => {
+      this.promotions = res.data
+    })
+  },
 }
 </script>

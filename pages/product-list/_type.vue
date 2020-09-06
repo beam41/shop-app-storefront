@@ -1,38 +1,33 @@
 <template>
-  <div class="container content-container">
-    <ProductDisplay header="กำไล" :items-list="recommend" />
+  <div v-if="productList" class="container content-container">
+    <ProductDisplay :header="typeName" :items-list="productList" />
+  </div>
+  <div v-else class="container">
+    <Loader style="min-height: calc(100vh - 3.5rem)" />
   </div>
 </template>
 
 <script>
+import { getProductByType } from '@/api/product'
 export default {
   data: () => ({
-    recommend: [
-      {
-        id: 1,
-        name: 'Lorem',
-        image: require('@/assets/images/placeholder.jpg'),
-        price: 500,
-      },
-      {
-        id: 2,
-        name: 'Lorem',
-        image: require('@/assets/images/placeholder.jpg'),
-        price: 500,
-      },
-      {
-        id: 3,
-        name: 'Lorem',
-        image: require('@/assets/images/placeholder.jpg'),
-        price: 500,
-      },
-      {
-        id: 4,
-        name: 'Lorem',
-        image: require('@/assets/images/placeholder.jpg'),
-        price: 500,
-      },
-    ],
+    productList: null,
   }),
+  computed: {
+    typeName() {
+      return this.$route.params.type
+    },
+  },
+  mounted() {
+    getProductByType(this.typeName)
+      .then((res) => {
+        this.productList = res.data
+      })
+      .catch((err) => {
+        if (err.response.status === 404) {
+          this.$router.push('/')
+        }
+      })
+  },
 }
 </script>

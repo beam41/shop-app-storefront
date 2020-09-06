@@ -23,14 +23,13 @@
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">รายการสินค้า</a>
             <div class="navbar-dropdown">
-              <nuxt-link to="/product-list/กำไล" class="navbar-item">
+              <nuxt-link
+                v-for="type in types"
+                :key="type.id"
+                :to="`/product-list/${type.name}`"
+                class="navbar-item"
+              >
                 กำไล
-              </nuxt-link>
-              <nuxt-link to="/product-list/สร้อยคอ" class="navbar-item">
-                สร้อยคอ
-              </nuxt-link>
-              <nuxt-link to="/product-list/ต่างหู" class="navbar-item">
-                ต่างหู
               </nuxt-link>
             </div>
           </div>
@@ -58,9 +57,16 @@
 </template>
 
 <script>
+import { getAllType } from '@/api/type'
 export default {
   data: () => ({
     isActive: false,
+    types: [],
   }),
+  mounted() {
+    getAllType().then((res) => {
+      this.types = res.data
+    })
+  },
 }
 </script>

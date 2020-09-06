@@ -2,7 +2,7 @@
   <div class="home">
     <div class="jumbotron flex flex-align-center flex-justify-end">
       <div class="jumbotron-title">
-        <h1 class="m-0 is-size-1 has-text-weight-medium">
+        <h1 class="has-text-grey-darker m-0 is-size-1 has-text-weight-medium">
           ร้านเครื่องเงิน Growth Silver
         </h1>
         <p class="m-0">
@@ -12,48 +12,50 @@
         </p>
       </div>
     </div>
-    <div class="container content-container">
+    <div
+      v-if="recommend !== null && typeAndProduct !== null"
+      class="container content-container"
+    >
       <ProductDisplay header="สินค้าแนะนำ" :items-list="recommend" />
-      <ProductDisplay
-        header="กำไล"
-        :items-list="recommend"
-        show-more-path="/product-list/กำไล"
-      />
+      <div>
+        <ProductDisplay
+          v-for="tp in typeAndProduct"
+          :key="tp.id"
+          :header="tp.name"
+          :items-list="tp.productList"
+          :show-more-path="`/product-list/${tp.name}`"
+        />
+      </div>
+    </div>
+    <div v-else class="container">
+      <Loader style="min-height: calc(100vh - 41.5rem)" />
     </div>
   </div>
 </template>
 
 <script>
+import { getRecommend, getAllTypeAndProduct } from '@/api/product'
 export default {
   data: () => ({
-    recommend: [
-      {
-        id: 1,
-        name: 'Lorem',
-        image: require('@/assets/images/placeholder.jpg'),
-        price: 500,
-      },
-      {
-        id: 2,
-        name: 'Lorem',
-        image: require('@/assets/images/placeholder.jpg'),
-        oldPrice: 700,
-        price: 500,
-      },
-      {
-        id: 3,
-        name: 'Lorem',
-        image: require('@/assets/images/placeholder.jpg'),
-        price: 500,
-      },
-      {
-        id: 4,
-        name: 'Lorem',
-        image: require('@/assets/images/placeholder.jpg'),
-        price: 500,
-      },
-    ],
+    recommend: null,
+    typeAndProduct: null,
   }),
+  mounted() {
+    this.getRecommend()
+    this.getAllTypeAndProduct()
+  },
+  methods: {
+    getRecommend() {
+      getRecommend(4).then((res) => {
+        this.recommend = res.data
+      })
+    },
+    getAllTypeAndProduct() {
+      getAllTypeAndProduct(4).then((res) => {
+        this.typeAndProduct = res.data
+      })
+    },
+  },
 }
 </script>
 
