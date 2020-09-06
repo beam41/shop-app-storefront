@@ -9,7 +9,9 @@
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@use '~/assets/styles/variable';
+
 .sk-folding-cube {
   margin: 20px auto;
   width: 40px;
@@ -35,7 +37,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: hsl(0, 0%, 21%);
+  background-color: variable.$loader-color;
   -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
   animation: sk-foldCubeAngle 2.4s infinite linear both;
   -webkit-transform-origin: 100% 100%;

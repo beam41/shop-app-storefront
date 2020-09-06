@@ -71,6 +71,11 @@ export default {
       },
     },
     loaders: {
+      vue: {
+        compilerOptions: {
+          whitespace: 'condense',
+        },
+      },
       scss: {
         implementation: require('sass'),
       },

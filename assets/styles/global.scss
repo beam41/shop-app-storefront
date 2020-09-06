@@ -18,9 +18,17 @@
   justify-content: space-between;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 .text-margin-half {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
+}
+
+.mb-5\.5 {
+  margin-bottom: 2rem;
 }
 
 .text-margin-full {
@@ -41,4 +49,8 @@
 
 .inner-pad {
   padding: 16px 0;
+}
+
+img {
+  object-fit: cover;
 }

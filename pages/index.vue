@@ -2,10 +2,10 @@
   <div class="home">
     <div class="jumbotron flex flex-align-center flex-justify-end">
       <div class="jumbotron-title">
-        <h1 class="has-text-grey-darker m-0 is-size-1 has-text-weight-medium">
+        <h1 class="has-text-grey-darker is-size-1 has-text-weight-medium">
           ร้านเครื่องเงิน Growth Silver
         </h1>
-        <p class="m-0">
+        <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac
           sapien sit amet ex tincidunt pellentesque at ac turpis. Nulla mollis
           mollis eros, et egestas justo imperdiet dictum
@@ -66,13 +66,13 @@ export default {
     height: 37.5rem;
     padding-right: 180px;
     box-shadow: 0px 4px 4px rgba(10, 10, 10, 0.03);
+  }
 
-    .jumbotron-title {
-      width: 37rem;
+  .jumbotron-title {
+    width: 37rem;
 
-      h1 {
-        white-space: nowrap;
-      }
+    h1 {
+      white-space: nowrap;
     }
   }
 }

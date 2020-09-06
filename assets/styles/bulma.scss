@@ -5,5 +5,8 @@ $weight-semibold: 500;
 $weight-bold: 500;
 $input-focus-border-color: #292929;
 $input-focus-box-shadow-color: rgba(#292929, 0.25);
+$button-focus-border-color: #292929;
+$button-focus-box-shadow-color: rgba(#292929, 0.25);
+$link: #1976d2;
 
 @import '~/node_modules/bulma/bulma.sass';
