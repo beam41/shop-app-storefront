@@ -90,4 +90,7 @@ export default {
   env: {
     endpoint: process.env.ENDPOINT,
   },
+  purgeCSS: {
+    whitelistPatternsChildren: [/svg-as-font/],
+  },
 }
