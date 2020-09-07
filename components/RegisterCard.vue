@@ -196,13 +196,13 @@ export default {
 <style lang="scss" scoped>
 .regis-card {
   width: 600px;
+}
 
-  .select {
-    width: 50%;
+.select {
+  width: 50%;
 
-    select {
-      width: 100%;
-    }
+  select {
+    width: 100%;
   }
 }
 </style>

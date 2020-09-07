@@ -38,7 +38,10 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [{ src: './plugins/axios.js', mode: 'client' }],
+  plugins: [
+    { src: './plugins/axios.js', mode: 'client' },
+    { src: './plugins/long-click.js', mode: 'client' },
+  ],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -89,8 +92,5 @@ export default {
   },
   env: {
     endpoint: process.env.ENDPOINT,
-  },
-  purgeCSS: {
-    whitelistPatternsChildren: [/svg-as-font/],
   },
 }

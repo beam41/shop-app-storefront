@@ -60,20 +60,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.home {
-  .jumbotron {
-    background: #ffffff;
-    height: 37.5rem;
-    padding-right: 180px;
-    box-shadow: 0px 4px 4px rgba(10, 10, 10, 0.03);
-  }
+.jumbotron {
+  background: #ffffff;
+  height: 37.5rem;
+  padding-right: 180px;
+  box-shadow: 0px 4px 4px rgba(10, 10, 10, 0.03);
+}
 
-  .jumbotron-title {
-    width: 37rem;
+.jumbotron-title {
+  width: 37rem;
 
-    h1 {
-      white-space: nowrap;
-    }
+  h1 {
+    white-space: nowrap;
   }
 }
 </style>

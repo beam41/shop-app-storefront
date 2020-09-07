@@ -16,7 +16,11 @@ export default {
       name: 'กำไล',
       description: Array(1250)
         .fill(null)
-        .map((_) => string[Math.trunc(Math.random() * string.length)])
+        .map((_, index) =>
+          index % 50 === 0
+            ? '\n'
+            : string[Math.trunc(Math.random() * string.length)]
+        )
         .join(''),
       price: 114,
       newPrice: 123,
