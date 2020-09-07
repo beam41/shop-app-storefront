@@ -2,8 +2,13 @@
   <div>
     <div class="image-box">
       <div class="img-cover">
-        <figure class="image is-1by1">
-          <img :src="currImage" :alt="product.description" />
+        <figure
+          v-for="(img, index) in product.imageUrls"
+          v-show="index === currImageIndex"
+          :key="img.id"
+          class="image is-1by1"
+        >
+          <img :src="img.imageUrl" :alt="product.description" />
         </figure>
       </div>
       <div class="buttons">
@@ -31,14 +36,11 @@ export default {
     },
   },
   data: () => ({
-    currImage: null,
+    currImageIndex: 0,
   }),
-  mounted() {
-    this.changeImage(0)
-  },
   methods: {
     changeImage(index) {
-      this.currImage = this.product.imageUrls[index]?.imageUrl
+      this.currImageIndex = index
     },
   },
 }
