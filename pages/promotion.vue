@@ -14,14 +14,14 @@
 </template>
 
 <script>
-import { getAllPromotionAndProduct } from '@/api/product'
+import { getAllPromotionsAndProducts } from '@/api/product'
 
 export default {
   data: () => ({
     promotions: null,
   }),
   mounted() {
-    getAllPromotionAndProduct().then((res) => {
+    getAllPromotionsAndProducts().then((res) => {
       this.promotions = res.data
     })
   },

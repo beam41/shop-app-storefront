@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { getProductByType } from '@/api/product'
+import { getAllProductsByType } from '@/api/product'
 export default {
   data: () => ({
     productList: null,
@@ -19,7 +19,7 @@ export default {
     },
   },
   mounted() {
-    getProductByType(this.typeName)
+    getAllProductsByType(this.typeName)
       .then((res) => {
         this.productList = res.data
       })

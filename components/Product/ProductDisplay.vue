@@ -16,7 +16,7 @@
         <nuxt-link class="card" :to="`/product/${item.id}`">
           <div class="card-image">
             <figure class="image is-16by9">
-              <img :src="item.image" :alt="item.name" />
+              <img :src="item.imageUrl" :alt="item.name" />
             </figure>
           </div>
           <div class="card-content">

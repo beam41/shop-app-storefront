@@ -3,19 +3,46 @@
     <div class="image-box">
       <div class="img-cover">
         <figure class="image is-1by1">
-          <img src="@/assets/images/placeholder.jpg" alt="รูป" />
+          <img :src="currImage" :alt="product.description" />
         </figure>
       </div>
       <div class="buttons">
-        <button v-for="i in 7" :key="i" class="button image-select">
+        <button
+          v-for="(img, index) in product.imageUrls"
+          :key="img.id"
+          class="button image-select"
+          @click="changeImage(index)"
+        >
           <figure class="image is-1by1">
-            <img src="@/assets/images/placeholder.jpg" alt="รูป" />
+            <img :src="img.imageUrl" :alt="img.imageUrl" />
           </figure>
         </button>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    product: {
+      type: Object,
+      required: true,
+    },
+  },
+  data: () => ({
+    currImage: null,
+  }),
+  mounted() {
+    this.changeImage(0)
+  },
+  methods: {
+    changeImage(index) {
+      this.currImage = this.product.imageUrls[index]?.imageUrl
+    },
+  },
+}
+</script>
 
 <style lang="scss" scoped>
 img {

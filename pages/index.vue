@@ -34,24 +34,24 @@
 </template>
 
 <script>
-import { getRecommend, getAllTypeAndProduct } from '@/api/product'
+import { getRecommends, getAllTypesAndProducts } from '@/api/product'
 export default {
   data: () => ({
     recommend: null,
     typeAndProduct: null,
   }),
   mounted() {
-    this.getRecommend()
-    this.getAllTypeAndProduct()
+    this.getRecommends()
+    this.getAllTypesAndProducts()
   },
   methods: {
-    getRecommend() {
-      getRecommend(4).then((res) => {
+    getRecommends() {
+      getRecommends(4).then((res) => {
         this.recommend = res.data
       })
     },
-    getAllTypeAndProduct() {
-      getAllTypeAndProduct(4).then((res) => {
+    getAllTypesAndProducts() {
+      getAllTypesAndProducts(4).then((res) => {
         this.typeAndProduct = res.data
       })
     },

@@ -8,14 +8,17 @@
     <h1 class="has-text-grey-darker mb-5.5 is-size-2 has-text-weight-medium">
       {{ product.name }}
     </h1>
-    <p
-      v-if="product.newPrice !== null"
-      class="has-text-grey-darker is-size-4 mb-5"
-    >
+    <p v-if="product.newPrice !== null" class="has-text-grey-darker is-size-4">
       <span class="old-price">{{ product.price }}</span>
       {{ product.newPrice }} บาท
     </p>
-    <p v-else>{{ product.price }} บาท</p>
+    <p v-else class="has-text-grey-darker is-size-4 mb-5">
+      {{ product.price }} บาท
+    </p>
+    <p v-if="product.promotion !== null" class="has-text-danger is-size-7 mb-5">
+      โปรโมชั่น {{ product.promotion.name }}:
+      {{ product.promotion.description }}
+    </p>
     <div class="section-input">
       <div class="field has-addons mr-3 mb-5">
         <div class="control">

@@ -1,17 +1,21 @@
 import axios from './axios'
 
-export function getRecommend(amount) {
+export function getRecommends(amount) {
   return axios.instance.get(`/products/recommend?amount=${amount}`)
 }
 
-export function getAllTypeAndProduct(amount) {
+export function getAllTypesAndProducts(amount) {
   return axios.instance.get(`/products/type?amount=${amount}`)
 }
 
-export function getAllPromotionAndProduct() {
+export function getAllPromotionsAndProducts() {
   return axios.instance.get(`/products/promotion`)
 }
 
-export function getProductByType(typeName) {
+export function getAllProductsByType(typeName) {
   return axios.instance.get(`/products/type/${typeName}`)
+}
+
+export function getProductById(id) {
+  return axios.instance.get(`/products/${id}`)
 }

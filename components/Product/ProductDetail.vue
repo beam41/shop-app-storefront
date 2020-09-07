@@ -1,7 +1,7 @@
 <template>
   <div class="product-detail inner-pad">
     <div class="columns is-tablet is-variable is-0-until-tablet is-8-desktop">
-      <ProductDetailImage class="column" />
+      <ProductDetailImage :product="product" class="column" />
       <ProductDetailInfo :product="product" class="column is-two-thirds" />
     </div>
   </div>
