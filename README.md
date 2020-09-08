@@ -1,6 +1,6 @@
 # shop-app-storefront
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/062da8d9-e047-4af5-9e92-a1fb05cb4b5d/deploy-status)](https://app.netlify.com/sites/shop-app-storefront/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f2c64a53-62d1-4993-9afb-39de6d2355b7/deploy-status)](https://app.netlify.com/sites/shop-app-storefront/deploys)
 
 ## Build Setup
 
