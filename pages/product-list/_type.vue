@@ -3,7 +3,7 @@
     <ProductDisplay :header="typeName" :items-list="productList" />
   </div>
   <div v-else class="container">
-    <Loader style="min-height: calc(100vh - 3.5rem)" />
+    <Loader style="min-height: calc(100vh - 3.25rem)" />
   </div>
 </template>
 

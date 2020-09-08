@@ -28,7 +28,7 @@
       </div>
     </div>
     <div v-else class="container">
-      <Loader style="min-height: calc(100vh - 41.5rem)" />
+      <Loader style="min-height: calc(100vh - 40.75rem)" />
     </div>
   </div>
 </template>

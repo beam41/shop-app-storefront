@@ -37,8 +37,8 @@
         </div>
 
         <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
+          <div class="navbar-item py-0">
+            <div v-if="!user" class="buttons">
               <nuxt-link to="/register" class="button is-dark">
                 สมัครสมาชิก
               </nuxt-link>
@@ -58,6 +58,7 @@
 
 <script>
 import { getAllType } from '@/api/type'
+import { mapState } from 'vuex'
 export default {
   data: () => ({
     isActive: false,
@@ -67,6 +68,11 @@ export default {
     getAllType().then((res) => {
       this.types = res.data
     })
+  },
+  computed: {
+    ...mapState({
+      user: (state) => state.user.data,
+    }),
   },
 }
 </script>
