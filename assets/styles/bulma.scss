@@ -8,6 +8,13 @@ $input-focus-box-shadow-color: rgba(#292929, 0.25);
 $button-focus-border-color: #292929;
 $button-focus-box-shadow-color: rgba(#292929, 0.25);
 $link: #1976d2;
-$red: #D32F2F;
+$red: #d32f2f;
+$navbar-item-hover-color: #0a0a0a;
+$navbar-tab-hover-border-bottom-color: #0a0a0a;
+$navbar-tab-active-color: #0a0a0a;
+$navbar-tab-active-border-bottom-color: #0a0a0a;
+$navbar-dropdown-arrow: #0a0a0a;
+$navbar-dropdown-item-active-color: #0a0a0a;
+$input-arrow: #0a0a0a;
 
 @import '~/node_modules/bulma/bulma.sass';

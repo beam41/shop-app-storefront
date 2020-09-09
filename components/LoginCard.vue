@@ -14,6 +14,7 @@
             type="text"
             placeholder="ชื่อผู้ใช้งาน"
             :disabled="loading"
+            autocomplete="username"
           />
         </div>
       </div>
@@ -27,6 +28,7 @@
             type="password"
             placeholder="รหัสผ่าน"
             :disabled="loading"
+            autocomplete="current-password"
           />
         </div>
       </div>
@@ -75,8 +77,8 @@ export default {
         })
         .catch((err) => {
           this.loading = false
-          if (err.response.data.message) {
-            this.errMessage = err.response.data.message
+          if (err.response.status === 403) {
+            this.errMessage = 'ชื่อผู้ใช้งานหรือรหัสผ่านผิด'
           }
         })
     },

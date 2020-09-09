@@ -20,7 +20,7 @@
       <div :class="['navbar-menu', isActive ? 'is-active' : null]">
         <div class="navbar-start">
           <nuxt-link to="/" class="navbar-item">หน้าแรก</nuxt-link>
-          <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-item has-dropdown is-hoverable is-white">
             <a class="navbar-link">รายการสินค้า</a>
             <div class="navbar-dropdown">
               <nuxt-link
@@ -37,8 +37,8 @@
         </div>
 
         <div class="navbar-end">
-          <div class="navbar-item py-0">
-            <div v-if="!user" class="buttons">
+          <div v-if="!user" class="navbar-item py-0">
+            <div class="buttons">
               <nuxt-link to="/register" class="button is-dark">
                 สมัครสมาชิก
               </nuxt-link>
@@ -47,6 +47,26 @@
               </nuxt-link>
             </div>
           </div>
+          <template v-else>
+            <nuxt-link to="/cart" class="navbar-item">
+              <CartIcon /> รถเข็น
+            </nuxt-link>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link"> <UserIcon /> {{ user.fullName }} </a>
+              <div class="navbar-dropdown is-right">
+                <nuxt-link to="/edit-info" class="navbar-item">
+                  แก้ไขข้อมูลส่วนตัว
+                </nuxt-link>
+                <nuxt-link to="/history" class="navbar-item">
+                  รายการสั่งซื้อ
+                </nuxt-link>
+                <hr class="navbar-divider" />
+                <a class="has-text-danger navbar-item" @click="logout">
+                  ออกจากระบบ
+                </a>
+              </div>
+            </div>
+          </template>
         </div>
       </div>
     </nav>
@@ -59,7 +79,14 @@
 <script>
 import { getAllType } from '@/api/type'
 import { mapState } from 'vuex'
+import CartIcon from '@/assets/images/shopping_cart-black-18dp.svg?inline'
+import UserIcon from '@/assets/images/person_outline-black-18dp.svg?inline'
+
 export default {
+  components: {
+    CartIcon,
+    UserIcon,
+  },
   data: () => ({
     isActive: false,
     types: [],
@@ -73,6 +100,11 @@ export default {
     ...mapState({
       user: (state) => state.user.data,
     }),
+  },
+  methods: {
+    logout() {
+      this.$store.commit('user/logout')
+    },
   },
 }
 </script>
