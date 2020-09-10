@@ -91,15 +91,15 @@ export default {
     isActive: false,
     types: [],
   }),
-  mounted() {
-    getAllType().then((res) => {
-      this.types = res.data
-    })
-  },
   computed: {
     ...mapState({
       user: (state) => state.user.data,
     }),
+  },
+  mounted() {
+    getAllType().then((res) => {
+      this.types = res.data
+    })
   },
   methods: {
     logout() {

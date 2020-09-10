@@ -1,5 +1,5 @@
 <template>
-  <RegisterCard />
+  <UserRegisterCard />
 </template>
 
 <script>
