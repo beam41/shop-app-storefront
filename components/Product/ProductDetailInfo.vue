@@ -41,9 +41,16 @@
       </div>
       <div class="field has-addons mb-5">
         <div class="control">
-          <nuxt-link to="/login" class="button is-light">
+          <nuxt-link
+            v-if="!$store.state.user.data"
+            to="/login"
+            class="button is-light"
+          >
             กรุณาเข้าสู่ระบบ
           </nuxt-link>
+          <button v-else class="button is-dark" @click="addToCart">
+            เพิ่มลงรถเข็น
+          </button>
         </div>
       </div>
     </div>
@@ -91,6 +98,12 @@ export default {
         a = 1
       }
       this.amount = a
+    },
+    addToCart() {
+      this.$store.commit('cart/add', {
+        product: this.product,
+        amount: this.amount,
+      })
     },
   },
 }

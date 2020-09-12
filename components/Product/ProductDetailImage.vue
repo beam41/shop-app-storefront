@@ -56,9 +56,9 @@ img {
 }
 
 .image-select {
-  width: 5rem;
-  height: 5rem;
-  padding: 0.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0.25rem;
 
   .image {
     width: 100%;
