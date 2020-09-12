@@ -27,5 +27,5 @@ export function getZipcode(province, district, subDistrict) {
       v.province === province &&
       v.amphoe === district &&
       v.district === subDistrict
-  ).zipcode
+  )?.zipcode
 }

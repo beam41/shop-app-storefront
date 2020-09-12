@@ -4,6 +4,7 @@
       :loading="loading"
       header-text="สมัครสมาชิก"
       submit-text="สมัครสมาชิก"
+      :error-message="errMessage"
       @submit="register"
     />
   </div>
@@ -15,6 +16,7 @@ import { register } from '@/api/user'
 export default {
   data: () => ({
     loading: false,
+    errMessage: '',
   }),
   methods: {
     register(e) {
@@ -26,8 +28,8 @@ export default {
         })
         .catch((err) => {
           this.loading = false
-          if (err.message) {
-            this.errMessage = err.message
+          if (err.response.status) {
+            this.errMessage = `เกิดปัญหาขึ้น (รหัสปัญหา ${err.response.status}) กรุณาแจ้งผู้ดูแลระบบ`
           }
         })
     },

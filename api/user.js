@@ -11,3 +11,7 @@ export function login(username, password) {
 export function register(data) {
   return axios.instance.post(`/users/register`, data)
 }
+
+export function editUser(id, data) {
+  return axios.instance.put(`/users/${id}`, data)
+}

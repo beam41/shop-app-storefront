@@ -290,7 +290,7 @@
       </div>
     </div>
     <p class="has-text-danger mb-3 has-text-centered">
-      {{ errorList.length > 0 ? errMessage || '&#8203;' : '&#8203;' }}
+      {{ errMessage || '&#8203;' }}
     </p>
     <div class="field flex">
       <nuxt-link
@@ -339,6 +339,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    errorMessage: {
+      type: String,
+      default: null,
+    },
   },
   data: () => ({
     field: {
@@ -360,6 +364,7 @@ export default {
     errMessage: '',
     usnExist: false,
     usnChecking: false,
+    init: true,
   }),
   watch: {
     'field.province'(to) {
@@ -374,24 +379,21 @@ export default {
         this.field.district,
         to
       )
+      if (this.init) {
+        this.field.postalCode = this.initialValue.postalCode
+        this.init = false
+      }
     },
     'field.username'(to) {
       if (!this.editMode) this.checkExist(to)
+    },
+    errorMessage(to) {
+      this.errMessage = to
     },
   },
   mounted() {
     this.provinceList = getProvinceList()
     if (this.initialValue !== null) {
-      this.districtList = getDistrictList(this.initialValue.province)
-      this.subDistrictList = getSubDistrictList(
-        this.initialValue.province,
-        this.initialValue.district
-      )
-      this.postalCode = getZipcode(
-        this.initialValue.province,
-        this.initialValue.district,
-        this.initialValue.subDistrict
-      )
       this.field = {
         ...this.field,
         ...this.initialValue,
@@ -421,6 +423,7 @@ export default {
       }
     },
     errorCheck() {
+      this.errMessage = ''
       let errorList = []
       if (this.usnExist) {
         errorList.push('username')
@@ -467,7 +470,6 @@ export default {
         }
       }
 
-      this.errMessage = 'กรุณากรอกค่าให้ถูกต้อง'
       this.errorList = errorList
       if (errorList.length < 1) {
         this.$emit('submit', {
@@ -479,6 +481,8 @@ export default {
             // if edit mode but not want new password use undef
             this.editMode && !newPassword ? undefined : this.field.password,
         })
+      } else {
+        this.errMessage = 'กรุณากรอกค่าให้ถูกต้อง'
       }
     },
   },

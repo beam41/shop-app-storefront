@@ -9,4 +9,10 @@ export const mutations = {
   logout(state) {
     state.data = null
   },
+  editData(state, newData) {
+    state.data = {
+      ...state.data,
+      ...newData,
+    }
+  },
 }
