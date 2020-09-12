@@ -40,7 +40,6 @@ export default {
    */
   plugins: [
     { src: './plugins/axios.js', mode: 'client' },
-    { src: './plugins/long-click.js', mode: 'client' },
     { src: './plugins/persisted-state.js', mode: 'client' },
   ],
   /*

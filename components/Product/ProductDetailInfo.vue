@@ -64,12 +64,16 @@
 import ChevronLeft from '@/assets/images/chevron_left-black-18dp.svg?inline'
 import AddIcon from '@/assets/images/add-black-18dp.svg?inline'
 import RemoveIcon from '@/assets/images/remove-black-18dp.svg?inline'
+import { longClickDirective } from 'vue-long-click'
 
 export default {
   components: {
     ChevronLeft,
     AddIcon,
     RemoveIcon,
+  },
+  directives: {
+    longclick: longClickDirective({ delay: 400, interval: 50 }),
   },
   props: {
     product: {
