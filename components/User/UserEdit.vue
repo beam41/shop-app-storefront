@@ -1,14 +1,16 @@
 <template>
   <div class="container content-container">
-    <UserRegisterForm
-      :loading="loading"
-      header-text="แก้ไขข้อมูลส่วนตัว"
-      submit-text="บันทึก"
-      :initial-value="user"
-      edit-mode
-      :error-message="errMessage"
-      @submit="save"
-    />
+    <div class="inner-pad">
+      <UserRegisterForm
+        :loading="loading"
+        header-text="แก้ไขข้อมูลส่วนตัว"
+        submit-text="บันทึก"
+        :initial-value="user"
+        edit-mode
+        :error-message="errMessage"
+        @submit="save"
+      />
+    </div>
   </div>
 </template>
 

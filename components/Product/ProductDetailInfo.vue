@@ -89,6 +89,11 @@ export default {
       return this.product.description.split('\n')
     },
   },
+  watch: {
+    amount(to) {
+      if (to < 0) this.amount = 0
+    },
+  },
   methods: {
     back() {
       this.$router.go(-1)
@@ -106,7 +111,7 @@ export default {
     addToCart() {
       this.$store.commit('cart/add', {
         product: this.product,
-        amount: this.amount,
+        amount: +this.amount,
       })
     },
   },
@@ -114,11 +119,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.old-price {
-  text-decoration-line: line-through;
-  color: rgba(#363636, 0.5);
-}
-
 .section-input {
   display: flex;
 

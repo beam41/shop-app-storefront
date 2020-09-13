@@ -9,6 +9,7 @@ export const mutations = {
     const productIndex = state.items.findIndex(
       (v) => v.product.id === product.id
     )
+    amount = +amount
     if (productIndex < 0) {
       state.items.push({ product, amount })
     } else {
@@ -19,5 +20,10 @@ export const mutations = {
   },
   remove(state, id) {
     state.items = state.items.filter((v) => v.product.id !== id)
+  },
+  editAmount(state, { id, newAmount }) {
+    const obj = state.items.find((v) => v.product.id === id)
+    if (newAmount < 0) newAmount = 0
+    if (obj) obj.amount = +newAmount
   },
 }

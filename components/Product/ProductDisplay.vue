@@ -87,11 +87,6 @@ export default {
     .promotion {
       color: rgba(183, 28, 28, 0.8);
     }
-
-    .old-price {
-      text-decoration-line: line-through;
-      color: rgba(74, 74, 74, 0.5);
-    }
   }
 }
 </style>

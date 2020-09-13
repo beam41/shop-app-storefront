@@ -2,7 +2,10 @@
   <form @submit.prevent="errorCheck">
     <div class="field">
       <h1
-        class="has-text-grey-darker is-size-4 has-text-centered has-text-weight-medium"
+        :class="[
+          'has-text-grey-darker is-size-3 has-text-centered has-text-weight-medium',
+          editMode ? 'text-margin-half' : null,
+        ]"
       >
         {{ headerText }}
       </h1>
@@ -317,7 +320,7 @@ import {
   getDistrictList,
   getSubDistrictList,
   getZipcode,
-} from '@/util/address'
+} from '@/utils/address'
 import { checkUserExist } from '@/api/user'
 
 export default {

@@ -49,7 +49,7 @@
           </div>
           <template v-else>
             <nuxt-link to="/cart" class="navbar-item">
-              <CartIcon /> รถเข็น
+              <CartIcon /> ตะกร้าสินค้า
             </nuxt-link>
             <div class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link"> <UserIcon /> {{ user.fullName }} </a>
