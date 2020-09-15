@@ -29,7 +29,7 @@ export default {
         .catch((err) => {
           this.loading = false
           if (err.response.status) {
-            this.errMessage = `เกิดปัญหาขึ้น (รหัสปัญหา ${err.response.status}) กรุณาแจ้งผู้ดูแลระบบ`
+            this.errMessage = `เกิดปัญหาขึ้น (รหัสปัญหา ${err.response.status}) โปรดลองใหม่อีกครั้ง`
           }
         })
     },

@@ -161,7 +161,7 @@
           <div class="control">
             <div
               :class="[
-                'select',
+                'select half',
                 errListInclude('province') ? 'is-danger' : null,
               ]"
             >
@@ -188,7 +188,7 @@
           <div class="control">
             <div
               :class="[
-                'select',
+                'select half',
                 errListInclude('district') ? 'is-danger' : null,
               ]"
             >
@@ -220,7 +220,7 @@
           <div class="control">
             <div
               :class="[
-                'select',
+                'select half',
                 errListInclude('subDistrict') ? 'is-danger' : null,
               ]"
             >
@@ -427,13 +427,14 @@ export default {
     },
     errorCheck() {
       this.errMessage = ''
+      this.errorList = []
       let errorList = []
       if (this.usnExist) {
         errorList.push('username')
         this.errorList = errorList
         return
       }
-      this.errorList = []
+
       const fieldList = [
         'username',
         'password',
@@ -491,17 +492,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.select {
-  width: 50%;
-
-  select {
-    width: 100%;
-  }
-}
-
-.field button {
-  margin-left: auto;
-}
-</style>

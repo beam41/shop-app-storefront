@@ -6,6 +6,10 @@
   align-items: center;
 }
 
+.flex-align-end {
+  align-items: flex-end;
+}
+
 .flex-justify-center {
   justify-content: center;
 }
@@ -63,4 +67,24 @@ img {
 
 .flex-1 {
   flex: 1;
+}
+
+.select.half {
+  width: 50%;
+  max-width: 250px;
+  @media screen and (max-width: 768px) {
+    & {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+
+  select {
+    width: 100%;
+  }
+}
+
+.field button:not(:first-child),
+.field button:last-child {
+  margin-left: auto;
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="box flex flex-col">
+    <div :class="['box flex flex-col', isCheckout ? 'is-checkout' : null]">
       <h2 class="has-text-weight-medium is-size-5 has-text-grey-darker mb-4">
         สรุปคำสั่งซื้อ
       </h2>
@@ -31,7 +31,11 @@
         </div>
       </div>
     </div>
-    <button class="button is-dark is-fullwidth" @click="$emit('check-out')">
+    <button
+      v-if="!isCheckout"
+      class="button is-dark is-fullwidth"
+      @click="$emit('check-out')"
+    >
       ชำระเงิน
     </button>
   </div>
@@ -41,6 +45,9 @@
 import { mapState } from 'vuex'
 import { nullish } from '@/utils/nullish'
 export default {
+  props: {
+    isCheckout: Boolean,
+  },
   computed: {
     ...mapState({
       cart: (state) => state.cart.items,
@@ -65,6 +72,9 @@ export default {
 <style lang="scss" scoped>
 .box {
   height: calc(100% - 4rem);
+  &.is-checkout {
+    height: 100%;
+  }
 }
 
 .table-item td {

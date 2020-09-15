@@ -45,7 +45,7 @@ export default {
           if (err.response.status === 403) {
             this.errMessage = `กรุณากรอกรหัสผ่านเก่าให้ถูกต้อง`
           } else {
-            this.errMessage = `เกิดปัญหาขึ้น (รหัสปัญหา ${err.response.status}) กรุณาแจ้งผู้ดูแลระบบ`
+            this.errMessage = `เกิดปัญหาขึ้น (รหัสปัญหา ${err.response.status}) โปรดลองใหม่อีกครั้ง`
           }
         })
     },

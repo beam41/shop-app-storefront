@@ -12,10 +12,15 @@
         v-if="!checkout"
         class="column is-full-desktop is-two-thirds-widescreen"
       />
-      <CartSummary class="column" @check-out="setCheckout(true)" />
+      <CartSummary
+        class="column"
+        :is-checkout="checkout"
+        @check-out="setCheckout(true)"
+      />
       <CartCheckoutForm
         v-if="checkout"
         class="column is-full-desktop is-two-thirds-widescreen"
+        @back="setCheckout(false)"
       />
     </div>
   </div>
