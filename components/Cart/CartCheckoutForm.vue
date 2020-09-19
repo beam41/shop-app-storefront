@@ -249,7 +249,15 @@ import {
   getZipcode,
 } from '@/utils/address'
 
+import { createOrder } from '@/api/order'
+
 export default {
+  props: {
+    cart: {
+      type: Array,
+      required: true,
+    },
+  },
   data: () => ({
     field: {
       fullName: '',
@@ -342,7 +350,32 @@ export default {
         this.errMessage = 'กรุณากรอกค่าให้ถูกต้อง'
       }
     },
-    checkout() {},
+    checkout() {
+      const payload = {
+        products: this.cart.map((item) => ({
+          productId: item.product.id,
+          amount: item.amount,
+        })),
+        addressJson: {
+          ...this.field,
+          payment: undefined,
+        },
+        purchaseMethod: this.field.payment,
+      }
+      this.loading = true
+      createOrder(payload)
+        .then((res) => {
+          this.loading = false
+          this.$router.push('/')
+          this.$store.commit('cart/clear')
+        })
+        .catch((err) => {
+          this.loading = false
+          if (err.response.status) {
+            this.errMessage = `เกิดปัญหาขึ้น (รหัสปัญหา ${err.response.status}) โปรดลองใหม่อีกครั้ง`
+          }
+        })
+    },
   },
 }
 </script>

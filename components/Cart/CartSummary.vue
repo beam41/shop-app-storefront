@@ -42,16 +42,16 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import { nullish } from '@/utils/nullish'
 export default {
   props: {
     isCheckout: Boolean,
+    cart: {
+      type: Array,
+      required: true,
+    },
   },
   computed: {
-    ...mapState({
-      cart: (state) => state.cart.items,
-    }),
     cartNonZero() {
       return this.cart.filter((item) => item.amount > 0)
     },

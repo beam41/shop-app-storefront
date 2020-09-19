@@ -10,16 +10,23 @@
     >
       <CartItems
         v-if="!checkout"
-        class="column is-full-desktop is-two-thirds-widescreen"
+        :cart="cart"
+        :class="[
+          'column',
+          cart.length > 0 ? 'is-full-desktop is-two-thirds-widescreen' : null,
+        ]"
       />
       <CartSummary
+        v-if="cart.length > 0"
         class="column"
         :is-checkout="checkout"
+        :cart="cart"
         @check-out="setCheckout(true)"
       />
       <CartCheckoutForm
         v-if="checkout"
         class="column is-full-desktop is-two-thirds-widescreen"
+        :cart="cart"
         @back="setCheckout(false)"
       />
     </div>
@@ -27,6 +34,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data: () => ({
     checkout: false,
@@ -35,6 +43,11 @@ export default {
     setCheckout(state) {
       this.checkout = state
     },
+  },
+  computed: {
+    ...mapState({
+      cart: (state) => state.cart.items,
+    }),
   },
 }
 </script>

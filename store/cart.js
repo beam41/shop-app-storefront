@@ -26,4 +26,7 @@ export const mutations = {
     if (newAmount < 0) newAmount = 0
     if (obj) obj.amount = +newAmount
   },
+  clear(state) {
+    state.items = []
+  }
 }
