@@ -16,14 +16,14 @@
           cart.length > 0 ? 'is-full-desktop is-two-thirds-widescreen' : null,
         ]"
       />
-      <CartSummary
+      <LazyCartSummary
         v-if="cart.length > 0"
         class="column"
         :is-checkout="checkout"
         :cart="cart"
         @check-out="setCheckout(true)"
       />
-      <CartCheckoutForm
+      <LazyCartCheckoutForm
         v-if="checkout"
         class="column is-full-desktop is-two-thirds-widescreen"
         :cart="cart"

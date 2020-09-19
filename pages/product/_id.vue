@@ -15,12 +15,16 @@ export default {
   }),
   mounted() {
     if (!isNaN(+this.$route.params.id)) {
-      getProductById(+this.$route.params.id).then((res) => {
-        this.product = res.data
-      })
+      getProductById(+this.$route.params.id)
+        .then((res) => {
+          this.product = res.data
+        })
+        .catch((err) => {
+          if (err.response.status === 404) this.$router.push('/')
+        })
+    } else {
+      this.$router.push('/')
     }
   },
 }
 </script>
-
-<style></style>
