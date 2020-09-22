@@ -94,4 +94,7 @@ export default {
   env: {
     endpoint: process.env.ENDPOINT,
   },
+  generate: {
+    fallback: true,
+  },
 }
