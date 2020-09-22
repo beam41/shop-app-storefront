@@ -79,6 +79,8 @@ export default {
           this.loading = false
           if (err.response.status === 403) {
             this.errMessage = 'ชื่อผู้ใช้งานหรือรหัสผ่านผิด'
+          } else {
+            this.errMessage = `เกิดปัญหาขึ้น (รหัสปัญหา ${err.response.status}) โปรดลองใหม่อีกครั้ง`
           }
         })
     },

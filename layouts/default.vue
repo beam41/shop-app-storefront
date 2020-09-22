@@ -29,7 +29,7 @@
                 :to="`/product-list/${type.name}`"
                 class="navbar-item"
               >
-                กำไล
+                {{ type.name }}
               </nuxt-link>
             </div>
           </div>
