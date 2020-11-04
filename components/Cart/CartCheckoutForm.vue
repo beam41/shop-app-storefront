@@ -222,6 +222,39 @@
             </div>
           </div>
         </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label" for="regisCard_Distribution">
+              วิธีการจัดส่ง
+            </label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <div
+                  :class="[
+                    'select half',
+                    errListInclude('distribution') ? 'is-danger' : null,
+                  ]"
+                >
+                  <select
+                    id="regisCard_Distribution"
+                    v-model="field.distribution"
+                    :disabled="loading"
+                  >
+                    <option
+                      v-for="dist in distributionMethods"
+                      :key="dist.id"
+                      :value="dist.id"
+                    >
+                      {{ dist.name }} &mdash; {{ dist.price }} บาท
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <p class="has-text-danger mb-3 has-text-centered">
           {{ errMessage || '&#8203;' }}
         </p>
@@ -250,6 +283,7 @@ import {
 } from '@/utils/address'
 
 import { createOrder } from '@/api/order'
+import { getDistributionMethods } from '@/api/distribution'
 
 export default {
   props: {
@@ -268,6 +302,7 @@ export default {
       postalCode: '',
       phoneNumber: '',
       payment: '',
+      distribution: '',
     },
     errMessage: '',
     errorList: [],
@@ -276,6 +311,7 @@ export default {
     subDistrictList: [],
     init: true,
     loading: false,
+    distributionMethods: [],
   }),
   watch: {
     'field.province'(to) {
@@ -297,6 +333,9 @@ export default {
     },
   },
   mounted() {
+    getDistributionMethods().then((res) => {
+      this.distributionMethods = res.data
+    })
     this.provinceList = getProvinceList()
     this.field = {
       ...this.field,
@@ -334,6 +373,7 @@ export default {
         'postalCode',
         'phoneNumber',
         'payment',
+        'distribution',
       ]
 
       // check field constraint
@@ -361,6 +401,7 @@ export default {
           payment: undefined,
         },
         purchaseMethod: this.field.payment,
+        distributionMethodId: +this.field.distribution,
       }
       this.loading = true
       createOrder(payload)
