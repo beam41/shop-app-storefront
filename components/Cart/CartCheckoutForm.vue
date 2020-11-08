@@ -247,7 +247,7 @@
                       :key="dist.id"
                       :value="dist.id"
                     >
-                      {{ dist.name }} &mdash; {{ dist.price }} บาท
+                      {{ dist.name }} &mdash; {{ stringPrice(dist.price) }} บาท
                     </option>
                   </select>
                 </div>
@@ -281,6 +281,7 @@ import {
   getSubDistrictList,
   getZipcode,
 } from '@/utils/address'
+import { stringPrice } from '@/utils/string-price'
 
 import { createOrder } from '@/api/order'
 import { getDistributionMethods } from '@/api/distribution'
@@ -417,6 +418,7 @@ export default {
           }
         })
     },
+    stringPrice,
   },
 }
 </script>

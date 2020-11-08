@@ -16,8 +16,10 @@
               <td>× {{ item.amount }}</td>
               <td class="pr-0 has-text-right">
                 {{
-                  nullish(item.product.newPrice, item.product.price) *
-                  item.amount
+                  stringPrice(
+                    nullish(item.product.newPrice, item.product.price) *
+                      item.amount
+                  )
                 }}
                 บาท
               </td>
@@ -27,7 +29,7 @@
         <div class="sum-footer flex flex-space-between">
           <td class="pl-0">รวม</td>
           <td></td>
-          <td class="pr-0 has-text-right">{{ summation }} บาท</td>
+          <td class="pr-0 has-text-right">{{ stringPrice(summation) }} บาท</td>
         </div>
       </div>
     </div>
@@ -43,6 +45,8 @@
 
 <script>
 import { nullish } from '@/utils/nullish'
+import { stringPrice } from '@/utils/string-price'
+
 export default {
   props: {
     isCheckout: Boolean,
@@ -65,6 +69,7 @@ export default {
   },
   methods: {
     nullish,
+    stringPrice
   },
 }
 </script>

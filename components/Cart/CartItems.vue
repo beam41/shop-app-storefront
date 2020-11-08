@@ -32,9 +32,9 @@
             </h3>
             <h4 v-if="item.product.newPrice !== null">
               <span class="old-price">{{ item.product.price }}</span>
-              {{ item.product.newPrice }} บาท
+              {{ stringPrice(item.product.newPrice) }} บาท
             </h4>
-            <h3 v-else>{{ item.product.price }} บาท</h3>
+            <h3 v-else>{{ stringPrice(item.product.price) }} บาท</h3>
           </div>
           <div class="flex flex-space-between flex-col amount">
             <div class="field has-addons mb-0">
@@ -69,8 +69,10 @@
               <span>ราคารวม</span>
               <span class="sum"
                 >{{
-                  nullish(item.product.newPrice, item.product.price) *
-                  item.amount
+                  stringPrice(
+                    nullish(item.product.newPrice, item.product.price) *
+                      item.amount
+                  )
                 }}
                 บาท</span
               >
@@ -92,6 +94,8 @@ import AddIcon from '@/assets/images/add-black-18dp.svg?inline'
 import RemoveIcon from '@/assets/images/remove-black-18dp.svg?inline'
 import { longClickDirective } from 'vue-long-click'
 import { nullish } from '@/utils/nullish'
+import { stringPrice } from '@/utils/string-price'
+
 
 export default {
   components: {
@@ -106,7 +110,7 @@ export default {
     cart: {
       type: Array,
       required: true,
-    }
+    },
   },
   methods: {
     addAmount(id, currAmount) {
@@ -119,6 +123,7 @@ export default {
       this.$store.commit('cart/editAmount', { id, newAmount: e.target.value })
     },
     nullish,
+    stringPrice
   },
 }
 </script>

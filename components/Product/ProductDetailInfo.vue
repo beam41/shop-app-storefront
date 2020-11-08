@@ -10,10 +10,12 @@
     </h1>
     <p v-if="product.newPrice !== null" class="has-text-grey-darker is-size-4">
       <span class="old-price">{{ product.price }}</span>
-      {{ product.newPrice }} บาท
+      {{ stringPrice(product.newPrice) }}
+      บาท
     </p>
     <p v-else class="has-text-grey-darker is-size-4 mb-5">
-      {{ product.price }} บาท
+      {{ stringPrice(product.price) }}
+      บาท
     </p>
     <p v-if="product.promotion !== null" class="has-text-danger is-size-7 mb-5">
       โปรโมชั่น {{ product.promotion.name }}:
@@ -65,6 +67,8 @@ import ChevronLeft from '@/assets/images/chevron_left-black-18dp.svg?inline'
 import AddIcon from '@/assets/images/add-black-18dp.svg?inline'
 import RemoveIcon from '@/assets/images/remove-black-18dp.svg?inline'
 import { longClickDirective } from 'vue-long-click'
+import { stringPrice } from '@/utils/string-price'
+
 
 export default {
   components: {
@@ -114,6 +118,7 @@ export default {
         amount: +this.amount,
       })
     },
+    stringPrice
   },
 }
 </script>

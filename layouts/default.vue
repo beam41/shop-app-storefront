@@ -57,7 +57,7 @@
                 <nuxt-link to="/edit-info" class="navbar-item">
                   แก้ไขข้อมูลส่วนตัว
                 </nuxt-link>
-                <nuxt-link to="/order/history" class="navbar-item">
+                <nuxt-link to="/order" class="navbar-item">
                   รายการสั่งซื้อ
                 </nuxt-link>
                 <hr class="navbar-divider" />

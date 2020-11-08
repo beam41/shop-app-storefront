@@ -24,11 +24,11 @@
               <h3 class="is-size-5">{{ item.name }}</h3>
               <p v-if="item.newPrice" class="text-price promotion">
                 <span v-if="item.price" class="old-price"
-                  >{{ item.price }} บาท</span
+                  >{{ stringPrice(item.price) }} บาท</span
                 >
-                {{ item.newPrice }} บาท
+                {{ stringPrice(item.newPrice) }} บาท
               </p>
-              <p v-else class="text-price">{{ item.price }} บาท</p>
+              <p v-else class="text-price">{{ stringPrice(item.price) }} บาท</p>
             </div>
           </div>
         </nuxt-link>
@@ -43,7 +43,9 @@
 </template>
 
 <script>
+import { stringPrice } from '@/utils/string-price'
 import ChevronRight from '~/assets/images/chevron_right-black-18dp.svg?inline'
+
 export default {
   components: {
     ChevronRight,
@@ -69,6 +71,9 @@ export default {
       type: String,
       default: null,
     },
+  },
+  methods: {
+    stringPrice,
   },
 }
 </script>
