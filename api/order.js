@@ -11,3 +11,9 @@ export function getOrders() {
 export function getOrderById(id) {
   return axios.instance.get(`/orders/${id}`)
 }
+
+export function addProofOfPaymentFull(id, data) {
+  return axios.instance.put(`/orders/${id}/add-proof-full`, data, {
+    'Content-Type': 'multipart/form-data',
+  })
+}

@@ -10,18 +10,25 @@
         <div class="card-content">
           <div class="flex flex-align-baseline pb-4">
             <h2 class="flex-1 is-size-5 has-text-grey-darker">
-              คำสั่งซื้อ: {{ i.productsName.join(', ') }}
+              คำสั่งซื้อที่ {{ i.id }}: {{ i.productsName.join(', ') }}
             </h2>
             <p class="is-size-7 has-text-grey">
               อัพเดทเมื่อ:
-              <time :datetime="i.updatedDate">{{
+              <time :datetime="i.updatedDate.toString()">{{
                 i.updatedDate.format('D/M/BB H:mm')
               }}</time>
             </p>
           </div>
           <div class="flex flex-align-baseline">
             <p>ราคารวม: {{ stringPrice(i.totalPrice) }} บาท</p>
-            <p class="flex-1 has-text-right">สถานะ: {{ statusMap[i.state] }}</p>
+            <p class="flex-1 has-text-right">
+              สถานะ:
+              {{
+                i.state === OrderState.CREATED
+                  ? statusMap[i.state][i.purchaseMethod]
+                  : statusMap[i.state]
+              }}
+            </p>
           </div>
         </div>
       </nuxt-link>
@@ -34,6 +41,7 @@
 
 <script>
 import { stringPrice } from '@/utils/string-price'
+import OrderState from '@/constant/order-state'
 
 export default {
   props: {
@@ -45,14 +53,18 @@ export default {
   computed: {
     statusMap() {
       return {
-        CREATED: 'วางคำสั่งซื้อแล้ว',
+        CREATED: {
+          BANK: 'วางคำสั่งซื้อแล้ว',
+          ON_DELIVERY: 'รอการจัดส่ง',
+        },
         ADDED_PROOF_OF_PAYMENT_FULL: 'รอการตรวจสอบสลิปธนาคาร',
         APPROVED_PROOF_OF_PAYMENT_FULL: 'รอการจัดส่ง',
-        SENT: 'จัดส่งแล้ว',
+        SENT: 'จัดส่งสินค้าแล้ว',
         RECEIVED: 'ได้รับแล้ว',
         CANCELLED: 'ยกเลิกแล้ว',
       }
     },
+    OrderState: () => OrderState,
   },
   methods: {
     stringPrice,

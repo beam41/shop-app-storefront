@@ -203,18 +203,18 @@
                 <label class="radio">
                   <input
                     type="radio"
-                    :checked="field.payment === 'BANK'"
+                    :checked="field.payment === PurchaseMethod.BANK"
                     :disabled="loading"
-                    @click="setPayment('BANK')"
+                    @click="setPayment(PurchaseMethod.BANK)"
                   />
                   โอนผ่านธนาคาร
                 </label>
                 <label class="radio">
                   <input
                     type="radio"
-                    :checked="field.payment === 'ON_DELIVERY'"
+                    :checked="field.payment === PurchaseMethod.ON_DELIVERY"
                     :disabled="loading"
-                    @click="setPayment('ON_DELIVERY')"
+                    @click="setPayment(PurchaseMethod.ON_DELIVERY)"
                   />
                   ชำระเงินปลายทาง
                 </label>
@@ -285,6 +285,7 @@ import { stringPrice } from '@/utils/string-price'
 
 import { createOrder } from '@/api/order'
 import { getDistributionMethods } from '@/api/distribution'
+import PurchaseMethod from '@/constant/purchase-method'
 
 export default {
   props: {
@@ -314,6 +315,9 @@ export default {
     loading: false,
     distributionMethods: [],
   }),
+  computed: {
+    PurchaseMethod: () => PurchaseMethod,
+  },
   watch: {
     'field.province'(to) {
       this.districtList = getDistrictList(to)
