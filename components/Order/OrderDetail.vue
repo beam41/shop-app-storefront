@@ -28,11 +28,27 @@
               <template v-if="state.state === OrderState.CREATED">
                 <LazyOrderStateCreated :order="order" />
               </template>
+              <template
+                v-else-if="
+                  state.state === OrderState.ADDED_PROOF_OF_PAYMENT_FULL
+                "
+              >
+                <LazyOrderStateAddProofFull :order="order" />
+              </template>
+              <template v-else-if="state.state === OrderState.SENT">
+                <LazyOrderStateSent :order="order" />
+              </template>
+              <template v-else-if="state.state === OrderState.RECEIVED">
+                <LazyOrderStateReceived :order="order" />
+              </template>
             </div>
           </div>
         </div>
         <div
-          v-if="lastOrderState === state.state"
+          v-if="
+            state.state !== OrderState.RECEIVED &&
+            lastOrderState === state.state
+          "
           :key="'next' + state.id"
           class="state-block flex"
         >
@@ -52,6 +68,12 @@
             <div class="state-data-wrapper">
               <template v-if="state.state === OrderState.CREATED">
                 <LazyOrderStateCreatedNext
+                  :order="order"
+                  @reload="$emit('reload')"
+                />
+              </template>
+              <template v-else-if="state.state === OrderState.SENT">
+                <LazyOrderStateSentNext
                   :order="order"
                   @reload="$emit('reload')"
                 />

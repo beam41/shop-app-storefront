@@ -17,3 +17,7 @@ export function addProofOfPaymentFull(id, data) {
     'Content-Type': 'multipart/form-data',
   })
 }
+
+export function received(id, data) {
+  return axios.instance.put(`/orders/${id}/received`, data)
+}

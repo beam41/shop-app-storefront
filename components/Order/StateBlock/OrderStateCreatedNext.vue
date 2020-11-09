@@ -83,7 +83,9 @@ export default {
     submit() {
       const form = new FormData()
       form.append('image', this.image)
+      this.loading = true
       addProofOfPaymentFull(this.order.id, form).then((res) => {
+        this.loading = false
         this.$emit('reload')
       })
     },
