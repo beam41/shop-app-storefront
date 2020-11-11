@@ -21,3 +21,7 @@ export function addProofOfPaymentFull(id, data) {
 export function received(id, data) {
   return axios.instance.put(`/orders/${id}/received`, data)
 }
+
+export function cancelled(id) {
+  return axios.instance.put(`/orders/${id}/cancelled/user`)
+}

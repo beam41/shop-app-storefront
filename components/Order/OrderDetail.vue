@@ -6,7 +6,7 @@
       คำสั่งซื้อที่ {{ order.id }}
     </h1>
     <div v-if="lastOrderState === OrderState.CREATED" class="cancel-wrapper">
-      <a class="has-text-danger">ยกเลิกคำสั่งซื้อ</a>
+      <a class="has-text-danger" @click="cancelOrder">ยกเลิกคำสั่งซื้อ</a>
     </div>
     <div class="state-block-wrapper">
       <template v-for="state in order.orderStates">
@@ -19,7 +19,7 @@
             <time
               :datetime="state.createdAt.toString()"
               class="has-text-grey is-size-7"
-              >{{ state.createdAt.format('D/M/BB H:mm') }}</time
+              >{{ state.createdAt.format('D MMM BB H:mm') }}</time
             >
             <h2 class="has-text-grey-darker has-text-weight-medium">
               {{ headerTextMap(state.state, order.cancelledByAdmin) }}
@@ -41,7 +41,11 @@
               <template v-else-if="state.state === OrderState.RECEIVED">
                 <LazyOrderStateReceived :order="order" />
               </template>
-              <template v-else-if="state.state === OrderState.CANCELLED">
+              <template
+                v-else-if="
+                  state.state === OrderState.CANCELLED && order.cancelledByAdmin
+                "
+              >
                 <LazyOrderStateCancelled :order="order" />
               </template>
             </div>
@@ -64,13 +68,18 @@
             <time
               :datetime="state.createdAt.toString()"
               class="has-text-grey is-size-7"
-              >{{ state.createdAt.format('D/M/BB H:mm') }}</time
+              >{{ state.createdAt.format('D MMM BB H:mm') }}</time
             >
             <h2 class="has-text-grey-darker has-text-weight-medium">
               {{ headerTextNextMap(state.state) }}
             </h2>
             <div class="state-data-wrapper">
-              <template v-if="state.state === OrderState.CREATED">
+              <template
+                v-if="
+                  state.state === OrderState.CREATED &&
+                  order.purchaseMethod !== PurchaseMethod.ON_DELIVERY
+                "
+              >
                 <LazyOrderStateCreatedNext
                   :order="order"
                   @reload="$emit('reload')"
@@ -92,6 +101,9 @@
 
 <script>
 import OrderState from '@/constant/order-state'
+import PurchaseMethod from '@/constant/purchase-method'
+import { cancelled } from '@/api/order'
+
 const headerText = {
   CREATED: () => 'วางคำสั่งซื้อแล้ว',
   ADDED_PROOF_OF_PAYMENT_FULL: () => 'เพิ่มสลิปธนาคารแล้ว',
@@ -102,10 +114,13 @@ const headerText = {
 }
 
 const headerTextNext = {
-  CREATED: 'รอการชำระเงิน',
-  ADDED_PROOF_OF_PAYMENT_FULL: 'รอการตรวจสอบสลิปธนาคาร',
-  APPROVED_PROOF_OF_PAYMENT_FULL: 'รอการจัดส่ง',
-  SENT: 'ยืนยันการรับสินค้า',
+  CREATED: (purchaseMethod) =>
+    purchaseMethod === PurchaseMethod.ON_DELIVERY
+      ? 'รอการจัดส่ง'
+      : 'รอการชำระเงิน',
+  ADDED_PROOF_OF_PAYMENT_FULL: () => 'รอการตรวจสอบสลิปธนาคาร',
+  APPROVED_PROOF_OF_PAYMENT_FULL: () => 'รอการจัดส่ง',
+  SENT: () => 'ยืนยันการรับสินค้า',
 }
 
 export default {
@@ -120,13 +135,19 @@ export default {
       return this.order.orderStates[this.order.orderStates.length - 1].state
     },
     OrderState: () => OrderState,
+    PurchaseMethod: () => PurchaseMethod,
   },
   methods: {
     headerTextMap(state, byAdmin) {
       return headerText[state](byAdmin)
     },
     headerTextNextMap(state) {
-      return headerTextNext[state]
+      return headerTextNext[state](this.order.purchaseMethod)
+    },
+    cancelOrder() {
+      cancelled(this.order.id).then((res) => {
+        this.$router.push('/')
+      })
     },
   },
 }

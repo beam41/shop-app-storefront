@@ -401,10 +401,13 @@ export default {
           productId: item.product.id,
           amount: item.amount,
         })),
-        addressJson: {
-          ...this.field,
-          payment: undefined,
-        },
+        fullName: this.field.fullName,
+        address: this.field.address,
+        province: this.field.province,
+        district: this.field.district,
+        subDistrict: this.field.subDistrict,
+        postalCode: this.field.postalCode,
+        phoneNumber: this.field.phoneNumber,
         purchaseMethod: this.field.payment,
         distributionMethodId: +this.field.distribution,
       }
@@ -412,7 +415,7 @@ export default {
       createOrder(payload)
         .then((res) => {
           this.loading = false
-          this.$router.push('/')
+          this.$router.push(`/order/${res.data.id}`)
           this.$store.commit('cart/clear')
         })
         .catch((err) => {
