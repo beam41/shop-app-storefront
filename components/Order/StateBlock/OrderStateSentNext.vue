@@ -53,9 +53,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.proof-image {
-  max-height: 500px;
-}
-</style>

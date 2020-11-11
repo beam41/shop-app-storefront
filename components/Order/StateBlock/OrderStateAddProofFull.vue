@@ -4,7 +4,7 @@
       <h3 class="has-text-grey mb-1">หลักฐานการชำระเงิน</h3>
       <img
         class="proof-image"
-        :src="stateData.fileName"
+        :src="order.proofOfPaymentFullImage"
         alt="หลักฐานการชำระเงิน"
       />
     </div>
@@ -12,20 +12,11 @@
 </template>
 
 <script>
-import OrderState from '@/constant/order-state'
-
 export default {
   props: {
     order: {
       type: Object,
       required: true,
-    },
-  },
-  computed: {
-    stateData() {
-      return this.order.orderStates.find(
-        ({ state }) => state === OrderState.ADDED_PROOF_OF_PAYMENT_FULL
-      ).stateDataJson
     },
   },
 }

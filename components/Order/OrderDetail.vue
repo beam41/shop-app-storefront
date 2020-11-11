@@ -22,7 +22,7 @@
               >{{ state.createdAt.format('D/M/BB H:mm') }}</time
             >
             <h2 class="has-text-grey-darker has-text-weight-medium">
-              {{ headerTextMap(state.state) }}
+              {{ headerTextMap(state.state, order.cancelledByAdmin) }}
             </h2>
             <div class="state-data-wrapper">
               <template v-if="state.state === OrderState.CREATED">
@@ -41,11 +41,15 @@
               <template v-else-if="state.state === OrderState.RECEIVED">
                 <LazyOrderStateReceived :order="order" />
               </template>
+              <template v-else-if="state.state === OrderState.CANCELLED">
+                <LazyOrderStateCancelled :order="order" />
+              </template>
             </div>
           </div>
         </div>
         <div
           v-if="
+            state.state !== OrderState.CANCELLED &&
             state.state !== OrderState.RECEIVED &&
             lastOrderState === state.state
           "
@@ -89,12 +93,12 @@
 <script>
 import OrderState from '@/constant/order-state'
 const headerText = {
-  CREATED: 'วางคำสั่งซื้อแล้ว',
-  ADDED_PROOF_OF_PAYMENT_FULL: 'เพิ่มสลิปธนาคารแล้ว',
-  APPROVED_PROOF_OF_PAYMENT_FULL: 'ตรวจสอบสลิปธนาคารแล้ว',
-  SENT: 'จัดส่งสินค้าแล้ว',
-  RECEIVED: 'ได้รับแล้ว',
-  CANCELLED: 'ยกเลิกแล้ว',
+  CREATED: () => 'วางคำสั่งซื้อแล้ว',
+  ADDED_PROOF_OF_PAYMENT_FULL: () => 'เพิ่มสลิปธนาคารแล้ว',
+  APPROVED_PROOF_OF_PAYMENT_FULL: () => 'ตรวจสอบสลิปธนาคารแล้ว',
+  SENT: () => 'จัดส่งสินค้าแล้ว',
+  RECEIVED: () => 'ได้รับแล้ว',
+  CANCELLED: (byAdmin) => (byAdmin ? 'ถูกยกเลิกโดยผู้ขาย' : 'ยกเลิกแล้ว'),
 }
 
 const headerTextNext = {
@@ -118,8 +122,8 @@ export default {
     OrderState: () => OrderState,
   },
   methods: {
-    headerTextMap(state) {
-      return headerText[state]
+    headerTextMap(state, byAdmin) {
+      return headerText[state](byAdmin)
     },
     headerTextNextMap(state) {
       return headerTextNext[state]

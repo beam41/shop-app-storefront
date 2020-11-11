@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="proof-of-payment">
-      <h3 class="has-text-grey">ข้อความที่แนบถึงผู้ขาย:</h3>
-      <p>{{ order.receivedMessage }}</p>
+      <h3 class="has-text-grey">เหตุผล:</h3>
+      <p>{{ order.cancelledReason }}</p>
     </div>
   </div>
 </template>

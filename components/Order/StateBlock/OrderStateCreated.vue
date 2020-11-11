@@ -42,14 +42,16 @@
     <div class="address">
       <h3 class="has-text-grey">ที่อยู่สำหรับการจัดส่ง</h3>
       <p>
-        {{ addressData.address }}
+        {{ order.address }}
         <br />
-        {{ subDistTxt }} {{ addressData.subDistrict }} {{ distTxt }}
-        {{ addressData.district }}
+        {{ subDistTxt }} {{ order.subDistrict }} {{ distTxt }}
+        {{ order.district }}
         <br />
-        จังหวัด {{ addressData.province }}
+        จังหวัด {{ order.province }}
         <br />
-        {{ addressData.postalCode }}
+        {{ order.postalCode }}
+        <br />
+        เบอร์ติดต่อ: {{ order.phoneNumber }}
       </p>
     </div>
   </div>
@@ -59,7 +61,6 @@
 import { nullish } from '@/utils/nullish'
 import { stringPrice } from '@/utils/string-price'
 import PurchaseMethod from '@/constant/purchase-method'
-import OrderState from '@/constant/order-state'
 export default {
   props: {
     order: {
@@ -76,13 +77,8 @@ export default {
         ) + this.order.distributionMethod.price
       )
     },
-    addressData() {
-      return this.order.orderStates.find(
-        ({ state }) => state === OrderState.CREATED
-      ).stateDataJson
-    },
     isBangkok() {
-      return this.addressData.province === 'กรุงเทพมหานคร'
+      return this.province === 'กรุงเทพมหานคร'
     },
     subDistTxt() {
       return this.isBangkok ? 'แขวง' : 'ตำบล'
