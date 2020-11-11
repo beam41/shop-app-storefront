@@ -2,11 +2,13 @@
   <div>
     <div class="proof-of-payment">
       <h3 class="has-text-grey mb-1">หลักฐานการชำระเงิน</h3>
-      <img
-        class="proof-image"
-        :src="order.proofOfPaymentFullImage"
-        alt="หลักฐานการชำระเงิน"
-      />
+      <a :href="order.proofOfPaymentFullImage" target="_blank">
+        <img
+          class="proof-image"
+          :src="order.proofOfPaymentFullImage"
+          alt="หลักฐานการชำระเงิน"
+        />
+      </a>
     </div>
   </div>
 </template>
