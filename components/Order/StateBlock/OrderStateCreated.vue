@@ -60,7 +60,6 @@
 <script>
 import { nullish } from '@/utils/nullish'
 import { stringPrice } from '@/utils/string-price'
-import PurchaseMethod from '@/constant/purchase-method'
 export default {
   props: {
     order: {
@@ -78,7 +77,7 @@ export default {
       )
     },
     isBangkok() {
-      return this.province === 'กรุงเทพมหานคร'
+      return this.order.province === 'กรุงเทพมหานคร'
     },
     subDistTxt() {
       return this.isBangkok ? 'แขวง' : 'ตำบล'
@@ -86,7 +85,6 @@ export default {
     distTxt() {
       return this.isBangkok ? 'เขต' : 'อำเภอ'
     },
-    PurchaseMethod: () => PurchaseMethod,
   },
   methods: {
     stringPrice,

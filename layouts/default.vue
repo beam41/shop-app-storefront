@@ -81,6 +81,7 @@ import { getAllType } from '@/api/type'
 import { mapState } from 'vuex'
 import CartIcon from '@/assets/images/shopping_cart-black-18dp.svg?inline'
 import UserIcon from '@/assets/images/person_outline-black-18dp.svg?inline'
+import AuthPath from '@/constant/auth-path'
 
 export default {
   components: {
@@ -104,6 +105,10 @@ export default {
   methods: {
     logout() {
       this.$store.commit('user/logout')
+      const needAuth = AuthPath.some((v) => v.test(this.$route.path))
+      if (needAuth) {
+        this.$router.push('/')
+      }
     },
   },
 }

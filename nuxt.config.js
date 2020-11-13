@@ -87,6 +87,7 @@ export default {
   },
   router: {
     linkExactActiveClass: 'is-active',
+    middleware: ['authorize'],
   },
   loading: {
     color: 'hsl(0, 0%, 21%)',
