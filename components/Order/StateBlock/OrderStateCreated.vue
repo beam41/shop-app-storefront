@@ -11,7 +11,11 @@
               class="table-item"
             >
               <td class="pl-0">{{ item.name }}</td>
-              <td>{{ stringPrice(nullish(item.newPrice, item.price)) }} บาท</td>
+              <td v-if="item.newPrice" class="text-left">
+                <span class="old-price">{{ item.price }}</span>
+                {{ item.newPrice }} บาท
+              </td>
+              <td v-else class="text-left">{{ item.price }} บาท</td>
               <td>× {{ item.amount }}</td>
               <td class="pr-0 has-text-right">
                 {{
