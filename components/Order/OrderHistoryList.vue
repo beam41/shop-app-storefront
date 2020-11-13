@@ -15,7 +15,7 @@
             <p class="is-size-7 has-text-grey">
               อัพเดทเมื่อ:
               <time :datetime="i.updatedDate.toString()">{{
-                i.updatedDate.format('D/M/BB H:mm')
+                dayjs(i.updatedDate).format('D/M/BB H:mm')
               }}</time>
             </p>
           </div>
@@ -42,6 +42,7 @@
 <script>
 import { stringPrice } from '@/utils/string-price'
 import OrderState from '@/constant/order-state'
+import dayjs from 'dayjs'
 
 export default {
   props: {
@@ -68,6 +69,7 @@ export default {
   },
   methods: {
     stringPrice,
+    dayjs,
   },
 }
 </script>

@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
 import { getOrders } from '@/api/order'
 
 export default {
@@ -22,10 +21,7 @@ export default {
   }),
   mounted() {
     getOrders().then((res) => {
-      this.orders = res.data.map((dat) => ({
-        ...dat,
-        updatedDate: dayjs(dat.updatedDate),
-      }))
+      this.orders = res.data
     })
   },
 }

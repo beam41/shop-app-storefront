@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
 import { getOrderById } from '@/api/order'
 export default {
   data: () => ({
@@ -25,15 +24,7 @@ export default {
     getOrderById() {
       getOrderById(+this.$route.params.id)
         .then((res) => {
-          this.order = {
-            ...res.data,
-            orderStates: res.data.orderStates
-              .map((v) => ({
-                ...v,
-                createdAt: dayjs(v.createdAt),
-              }))
-              .sort((a, b) => (a.createdAt.isAfter(b.createdAt) ? 1 : -1)),
-          }
+          this.order = res.data
           console.log(this.order)
         })
         .catch((err) => {

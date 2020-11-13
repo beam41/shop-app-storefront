@@ -19,7 +19,7 @@
             <time
               :datetime="state.createdAt.toString()"
               class="has-text-grey is-size-7"
-              >{{ state.createdAt.format('D MMM BB H:mm') }}</time
+              >{{ dayjs(state.createdAt).format('D MMM BB H:mm') }}</time
             >
             <h2 class="has-text-grey-darker has-text-weight-medium">
               {{ headerTextMap(state.state, order.cancelledByAdmin) }}
@@ -68,7 +68,7 @@
             <time
               :datetime="state.createdAt.toString()"
               class="has-text-grey is-size-7"
-              >{{ state.createdAt.format('D MMM BB H:mm') }}</time
+              >{{ dayjs(state.createdAt).format('D MMM BB H:mm') }}</time
             >
             <h2 class="has-text-grey-darker has-text-weight-medium">
               {{ headerTextNextMap(state.state) }}
@@ -103,6 +103,7 @@
 import OrderState from '@/constant/order-state'
 import PurchaseMethod from '@/constant/purchase-method'
 import { cancelled } from '@/api/order'
+import dayjs from 'dayjs'
 
 const headerText = {
   CREATED: () => 'วางคำสั่งซื้อแล้ว',
@@ -149,6 +150,7 @@ export default {
         this.$router.push('/')
       })
     },
+    dayjs,
   },
 }
 </script>
