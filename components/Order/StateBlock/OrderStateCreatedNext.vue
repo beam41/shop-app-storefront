@@ -60,11 +60,11 @@ export default {
       type: Object,
       required: true,
     },
+    loading: Boolean,
   },
   data: () => ({
     paymentMethods: null,
     image: null,
-    loading: false,
   }),
   computed: {
     imageName() {
@@ -83,9 +83,9 @@ export default {
     submit() {
       const form = new FormData()
       form.append('image', this.image)
-      this.loading = true
+      this.$emit('loadState', true)
       addProofOfPaymentFull(this.order.id, form).then((res) => {
-        this.loading = false
+        this.$emit('loadState', false)
         this.$emit('reload')
       })
     },

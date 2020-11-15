@@ -92,3 +92,11 @@ img {
 .field button:last-child {
   margin-left: auto;
 }
+
+.right-fix {
+  margin-left: auto;
+}
+
+a[disabled="disabled"] {
+  pointer-events: none;
+}

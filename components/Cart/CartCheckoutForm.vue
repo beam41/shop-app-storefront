@@ -266,10 +266,42 @@
             :class="['button is-dark', loading ? 'is-loading' : '']"
             type="submit"
           >
-            ชำระเงิน
+            สั่งซื้อ
           </button>
         </div>
       </form>
+    </div>
+    <div v-if="showConfirm" class="modal is-active">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">ยืนยันการสั่งซื้อ</p>
+          <button
+            class="delete"
+            aria-label="close"
+            :disabled="loading"
+            @click="showConfirm = false"
+          ></button>
+        </header>
+        <section class="modal-card-body">
+          ยืนยันการสั่งซื้อ ? เมื่อตกลงแล้วจะไม่สามารถแก้ไขข้อมูลได้
+        </section>
+        <footer class="modal-card-foot field flex">
+          <button
+            class="button"
+            :disabled="loading"
+            @click="showConfirm = false"
+          >
+            ยกเลิก
+          </button>
+          <button
+            :class="['button is-dark', loading ? 'is-loading' : '']"
+            @click="checkout"
+          >
+            สั่งซื้อ
+          </button>
+        </footer>
+      </div>
     </div>
   </div>
 </template>
@@ -314,6 +346,7 @@ export default {
     init: true,
     loading: false,
     distributionMethods: [],
+    showConfirm: false,
   }),
   computed: {
     PurchaseMethod: () => PurchaseMethod,
@@ -390,7 +423,7 @@ export default {
 
       this.errorList = errorList
       if (errorList.length < 1) {
-        this.checkout()
+        this.showConfirm = true
       } else {
         this.errMessage = 'กรุณากรอกค่าให้ถูกต้อง'
       }

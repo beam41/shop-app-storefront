@@ -6,7 +6,13 @@
       คำสั่งซื้อที่ {{ order.id }}
     </h1>
     <div v-if="lastOrderState === OrderState.CREATED" class="cancel-wrapper">
-      <a class="has-text-danger" @click="cancelOrder">ยกเลิกคำสั่งซื้อ</a>
+      <a
+        class="has-text-danger"
+        :disabled="loading"
+        @click="showConfirmDelete = true"
+      >
+        ยกเลิกคำสั่งซื้อ
+      </a>
     </div>
     <div class="state-block-wrapper">
       <template v-for="state in order.orderStates">
@@ -82,12 +88,16 @@
               >
                 <LazyOrderStateCreatedNext
                   :order="order"
+                  :loading="loading"
+                  @loadState="setLoading"
                   @reload="$emit('reload')"
                 />
               </template>
               <template v-else-if="state.state === OrderState.SENT">
                 <LazyOrderStateSentNext
                   :order="order"
+                  :loading="loading"
+                  @loadState="setLoading"
                   @reload="$emit('reload')"
                 />
               </template>
@@ -95,6 +105,38 @@
           </div>
         </div>
       </template>
+    </div>
+    <div v-if="showConfirmDelete" class="modal is-active">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">ยืนยันการยกเลิกคำสั่งซื้อ</p>
+          <button
+            class="delete"
+            aria-label="close"
+            :disabled="loading"
+            @click="showConfirmDelete = false"
+          ></button>
+        </header>
+        <section class="modal-card-body">
+          ยืนยันการยกเลิกคำสั่งซื้อ ? เมื่อตกลงแล้วจะไม่สามารถเปลี่ยนแปลงได้
+        </section>
+        <footer class="modal-card-foot field flex">
+          <button
+            class="button"
+            :disabled="loading"
+            @click="showConfirmDelete = false"
+          >
+            ไม่
+          </button>
+          <button
+            :class="['button is-dark', loading ? 'is-loading' : '']"
+            @click="cancelOrder"
+          >
+            ใช่
+          </button>
+        </footer>
+      </div>
     </div>
   </div>
 </template>
@@ -131,6 +173,10 @@ export default {
       required: true,
     },
   },
+  data: () => ({
+    showConfirmDelete: false,
+    loading: false,
+  }),
   computed: {
     lastOrderState() {
       return this.order.orderStates[this.order.orderStates.length - 1].state
@@ -146,9 +192,18 @@ export default {
       return headerTextNext[state](this.order.purchaseMethod)
     },
     cancelOrder() {
-      cancelled(this.order.id).then((res) => {
-        this.$router.push('/')
-      })
+      this.loading = true
+      cancelled(this.order.id)
+        .then((res) => {
+          this.$router.push('/')
+          this.loading = false
+        })
+        .catch((err) => {
+          if (err) this.loading = false
+        })
+    },
+    setLoading(e) {
+      this.loading = e
     },
     dayjs,
   },
