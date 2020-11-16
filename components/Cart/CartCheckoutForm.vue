@@ -396,11 +396,6 @@ export default {
     submit() {
       this.errMessage = ''
       const errorList = []
-      if (this.usnExist) {
-        errorList.push('username')
-        this.errorList = errorList
-        return
-      }
       this.errorList = []
       const fieldList = [
         'fullName',

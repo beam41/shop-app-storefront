@@ -29,11 +29,14 @@
                 :to="`/product-list/${type.name}`"
                 class="navbar-item"
               >
-                กำไล
+                {{ type.name }}
               </nuxt-link>
             </div>
           </div>
           <nuxt-link to="/promotion" class="navbar-item">โปรโมชั่น</nuxt-link>
+          <nuxt-link to="/build-order/new" class="navbar-item">
+            สั่งทำเครื่องเงิน
+          </nuxt-link>
         </div>
 
         <div class="navbar-end">
@@ -59,6 +62,9 @@
                 </nuxt-link>
                 <nuxt-link to="/order" class="navbar-item">
                   รายการสั่งซื้อ
+                </nuxt-link>
+                <nuxt-link to="/build-order" class="navbar-item">
+                  รายการสั่งทำ
                 </nuxt-link>
                 <hr class="navbar-divider" />
                 <a class="has-text-danger navbar-item" @click="logout">
