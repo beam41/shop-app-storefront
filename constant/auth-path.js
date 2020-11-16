@@ -1,1 +1,1 @@
-export default [/^\/order/, /^\/cart/, /^\/edit-info/]
+export default [/^\/order/, /^\/cart/, /^\/edit-info/, /^\/build-order/]
