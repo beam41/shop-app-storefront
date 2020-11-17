@@ -5,3 +5,7 @@ export function placeBuildOrder(data) {
     'Content-Type': 'multipart/form-data',
   })
 }
+
+export function getBuildOrders() {
+  return axios.instance.get(`/buildorders/list`)
+}

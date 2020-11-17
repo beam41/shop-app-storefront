@@ -4,13 +4,18 @@
       <nuxt-link
         v-for="i in items"
         :key="i.id"
-        :to="`/order/${i.id}`"
+        :to="`/${buildOrder ? 'build-order' : 'order'}/${i.id}`"
         class="card orders"
       >
         <div class="card-content">
           <div class="flex flex-align-baseline pb-4">
             <h2 class="flex-1 is-size-5 has-text-grey-darker">
-              คำสั่งซื้อที่ {{ i.id }}: {{ i.productsName.join(', ') }}
+              <template v-if="buildOrder">
+                คำสั่งทำที่ {{ i.id }}: {{ i.orderDescription }}
+              </template>
+              <template v-else>
+                คำสั่งซื้อที่ {{ i.id }}: {{ i.productsName.join(', ') }}
+              </template>
             </h2>
             <p class="is-size-7 has-text-grey">
               อัพเดทเมื่อ:
@@ -20,12 +25,16 @@
             </p>
           </div>
           <div class="flex flex-align-baseline">
-            <p>ราคารวม: {{ stringPrice(i.totalPrice) }} บาท</p>
+            <p v-if="!buildOrder">
+              ราคารวม: {{ stringPrice(i.totalPrice) }} บาท
+            </p>
             <p class="flex-1 has-text-right">
               สถานะ:
               {{
                 i.state === OrderState.CREATED
-                  ? statusMap[i.state][i.purchaseMethod]
+                  ? buildOrder
+                    ? 'รอการตอบกลับจากผู้ขาย'
+                    : statusMap[i.state][i.purchaseMethod]
                   : statusMap[i.state]
               }}
             </p>
@@ -34,7 +43,7 @@
       </nuxt-link>
     </template>
     <div v-else class="box">
-      <Empty text="ไม่มีประวัติการสั่งซื้อ" />
+      <Empty :text="`ไม่มีประวัติการสั่ง${buildOrder ? 'ทำ' : 'ซื้อ'}`" />
     </div>
   </div>
 </template>
@@ -50,6 +59,7 @@ export default {
       type: Array,
       required: true,
     },
+    buildOrder: Boolean,
   },
   computed: {
     statusMap() {
@@ -58,11 +68,19 @@ export default {
           BANK: 'วางคำสั่งซื้อแล้ว',
           ON_DELIVERY: 'รอการจัดส่ง',
         },
-        ADDED_PROOF_OF_PAYMENT_FULL: 'รอการตรวจสอบสลิปธนาคาร',
+        ADDED_PROOF_OF_PAYMENT_FULL: this.buildOrder
+          ? 'โอนค่าเครื่องเงินส่วนที่เหลือแล้ว รอการตรวจสอบสลิปธนาคาร'
+          : 'รอการตรวจสอบสลิปธนาคาร',
         APPROVED_PROOF_OF_PAYMENT_FULL: 'รอการจัดส่ง',
         SENT: 'จัดส่งสินค้าแล้ว',
         RECEIVED: 'ได้รับแล้ว',
         CANCELLED: 'ยกเลิกแล้ว',
+        IS_ABLE_TO_BUILT: 'สามารถทำได้ กรุณายืนยัน',
+        IS_UNABLE_TO_BUILT: 'ไม่สามารถทำได้',
+        ADDED_PROOF_OF_PAYMENT_DEPOSIT: 'โอนมัดจำแล้ว รอการตรวจสอบสลิปธนาคาร',
+        APPROVED_PROOF_OF_PAYMENT_DEPOSIT: 'กำลังทำเครื่องเงิน',
+        BUILT_COMPLETE:
+          'ทำเครื่องเงินเรียบร้อยแล้ว กรุณาโอนค่าเครื่องเงินส่วนที่เหลือ',
       }
     },
     OrderState: () => OrderState,
