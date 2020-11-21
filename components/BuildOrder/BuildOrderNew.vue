@@ -241,7 +241,7 @@ export default {
       if (errorList.length < 1) {
         this.showConfirm = true
       } else {
-        this.errMessage = 'กรุณากรอกค่าให้ครบถ้วน'
+        this.errMessage = 'กรุณากรอกให้ครบถ้วน'
       }
     },
     placeOrder() {

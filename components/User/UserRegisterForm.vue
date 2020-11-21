@@ -486,7 +486,7 @@ export default {
             this.editMode && !newPassword ? undefined : this.field.password,
         })
       } else {
-        this.errMessage = 'กรุณากรอกค่าให้ครบถ้วน'
+        this.errMessage = 'กรุณากรอกให้ครบถ้วน'
       }
     },
   },
