@@ -28,31 +28,41 @@
               >{{ dayjs(state.createdAt).format('D MMM BB H:mm') }}</time
             >
             <h2 class="has-text-grey-darker has-text-weight-medium">
-              {{ headerTextMap(state.state, order.cancelledByAdmin) }}
+              {{ headerTextMap(state.state) }}
             </h2>
             <div class="state-data-wrapper">
-              <template v-if="state.state === OrderState.CREATED">
-                <LazyOrderStateCreated :order="order" />
+              <template v-if="buildOrder">
+                <template v-if="state.state === OrderState.CREATED">
+                  <LazyBuildOrderStateCreated :order="order" />
+                </template>
               </template>
-              <template
-                v-else-if="
-                  state.state === OrderState.ADDED_PROOF_OF_PAYMENT_FULL
-                "
-              >
-                <LazyOrderStateAddProofFull :order="order" />
-              </template>
-              <template v-else-if="state.state === OrderState.SENT">
-                <LazyOrderStateSent :order="order" />
-              </template>
-              <template v-else-if="state.state === OrderState.RECEIVED">
-                <LazyOrderStateReceived :order="order" />
-              </template>
-              <template
-                v-else-if="
-                  state.state === OrderState.CANCELLED && order.cancelledByAdmin
-                "
-              >
-                <LazyOrderStateCancelled :order="order" />
+              <template v-else>
+                <template v-if="state.state === OrderState.CREATED">
+                  <LazyOrderStateCreated :order="order" />
+                </template>
+                <template
+                  v-else-if="
+                    state.state === OrderState.ADDED_PROOF_OF_PAYMENT_FULL
+                  "
+                >
+                  <LazyOrderStateAddProof
+                    :proof="order.proofOfPaymentFullImage"
+                  />
+                </template>
+                <template v-else-if="state.state === OrderState.SENT">
+                  <LazyOrderStateSent :order="order" />
+                </template>
+                <template v-else-if="state.state === OrderState.RECEIVED">
+                  <LazyOrderStateReceived :order="order" />
+                </template>
+                <template
+                  v-else-if="
+                    state.state === OrderState.CANCELLED &&
+                    order.cancelledByAdmin
+                  "
+                >
+                  <LazyOrderStateCancelled :order="order" />
+                </template>
               </template>
             </div>
           </div>
@@ -61,6 +71,7 @@
           v-if="
             state.state !== OrderState.CANCELLED &&
             state.state !== OrderState.RECEIVED &&
+            state.state !== OrderState.IS_UNABLE_TO_BUILT &&
             lastOrderState === state.state
           "
           :key="'next' + state.id"
@@ -80,26 +91,29 @@
               {{ headerTextNextMap(state.state) }}
             </h2>
             <div class="state-data-wrapper">
-              <template
-                v-if="
-                  state.state === OrderState.CREATED &&
-                  order.purchaseMethod !== PurchaseMethod.ON_DELIVERY
-                "
-              >
-                <LazyOrderStateCreatedNext
-                  :order="order"
-                  :loading="loading"
-                  @loadState="setLoading"
-                  @reload="$emit('reload')"
-                />
-              </template>
-              <template v-else-if="state.state === OrderState.SENT">
-                <LazyOrderStateSentNext
-                  :order="order"
-                  :loading="loading"
-                  @loadState="setLoading"
-                  @reload="$emit('reload')"
-                />
+              <template v-if="buildOrder"></template>
+              <template v-else>
+                <template
+                  v-if="
+                    state.state === OrderState.CREATED &&
+                    order.purchaseMethod !== PurchaseMethod.ON_DELIVERY
+                  "
+                >
+                  <LazyOrderStateCreatedNext
+                    :order="order"
+                    :loading="loading"
+                    @loadState="setLoading"
+                    @reload="$emit('reload')"
+                  />
+                </template>
+                <template v-else-if="state.state === OrderState.SENT">
+                  <LazyOrderStateSentNext
+                    :order="order"
+                    :loading="loading"
+                    @loadState="setLoading"
+                    @reload="$emit('reload')"
+                  />
+                </template>
               </template>
             </div>
           </div>
@@ -148,19 +162,30 @@ import { cancelled } from '@/api/order'
 import dayjs from 'dayjs'
 
 const headerText = {
-  CREATED: () => 'วางคำสั่งซื้อแล้ว',
+  CREATED: ({ builOrder }) => 'วางคำสั่งซื้อแล้ว',
+  IS_ABLE_TO_BUILT: () => 'สามารถทำได้',
+  IS_UNABLE_TO_BUILT: () => 'ไม่สามารถทำได้',
+  ADDED_PROOF_OF_PAYMENT_DEPOSIT: () => 'เพิ่มสลิปธนาคารแล้ว (มัดจำ)',
+  APPROVED_PROOF_OF_PAYMENT_DEPOSIT: () => 'ตรวจสอบสลิปธนาคารแล้ว (มัดจำ)',
+  BUILT_COMPLETE: () => 'ทำเครื่องเงินเรียบร้อยแล้ว',
   ADDED_PROOF_OF_PAYMENT_FULL: () => 'เพิ่มสลิปธนาคารแล้ว',
   APPROVED_PROOF_OF_PAYMENT_FULL: () => 'ตรวจสอบสลิปธนาคารแล้ว',
   SENT: () => 'จัดส่งสินค้าแล้ว',
   RECEIVED: () => 'ได้รับแล้ว',
-  CANCELLED: (byAdmin) => (byAdmin ? 'ถูกยกเลิกโดยผู้ขาย' : 'ยกเลิกแล้ว'),
+  CANCELLED: ({ byAdmin }) => (byAdmin ? 'ถูกยกเลิกโดยผู้ขาย' : 'ยกเลิกแล้ว'),
 }
 
 const headerTextNext = {
-  CREATED: (purchaseMethod) =>
-    purchaseMethod === PurchaseMethod.ON_DELIVERY
+  CREATED: ({ builOrder, purchaseMethod }) =>
+    builOrder
+      ? 'รอการตอบกลับจากผู้ขาย'
+      : purchaseMethod === PurchaseMethod.ON_DELIVERY
       ? 'รอการจัดส่ง'
       : 'รอการชำระเงิน',
+  IS_ABLE_TO_BUILT: () => 'ยืนยันการสั่งทำและโอนเงินมัดจำ',
+  ADDED_PROOF_OF_PAYMENT_DEPOSIT: () => 'รอการตรวจสอบสลิปธนาคาร',
+  APPROVED_PROOF_OF_PAYMENT_DEPOSIT: () => 'กำลังทำเครื่องเงินเรียบร้อย',
+  BUILT_COMPLETE: () => 'รอการชำระเงินส่วนที่เหลือ',
   ADDED_PROOF_OF_PAYMENT_FULL: () => 'รอการตรวจสอบสลิปธนาคาร',
   APPROVED_PROOF_OF_PAYMENT_FULL: () => 'รอการจัดส่ง',
   SENT: () => 'ยืนยันการรับสินค้า',
@@ -172,6 +197,7 @@ export default {
       type: Object,
       required: true,
     },
+    buildOrder: Boolean,
   },
   data: () => ({
     showConfirmDelete: false,
@@ -185,11 +211,17 @@ export default {
     PurchaseMethod: () => PurchaseMethod,
   },
   methods: {
-    headerTextMap(state, byAdmin) {
-      return headerText[state](byAdmin)
+    headerTextMap(state) {
+      return headerText[state]({
+        builOrder: this.buildOrder,
+        byAdmin: this.order.cancelledByAdmin,
+      })
     },
     headerTextNextMap(state) {
-      return headerTextNext[state](this.order.purchaseMethod)
+      return headerTextNext[state]({
+        builOrder: this.buildOrder,
+        purchaseMethod: this.order.purchaseMethod,
+      })
     },
     cancelOrder() {
       this.loading = true

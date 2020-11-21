@@ -9,7 +9,7 @@
       >
         <div class="card-content">
           <div class="flex flex-align-baseline pb-4">
-            <h2 class="flex-1 is-size-5 has-text-grey-darker">
+            <h2 class="flex-1 is-size-5 has-text-grey-darker title">
               <template v-if="buildOrder">
                 คำสั่งทำที่ {{ i.id }}: {{ i.orderDescription }}
               </template>
@@ -101,5 +101,11 @@ export default {
   &:not(:last-child) {
     margin-bottom: 1.5rem;
   }
+}
+
+.title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

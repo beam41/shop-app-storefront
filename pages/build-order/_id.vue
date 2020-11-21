@@ -1,0 +1,35 @@
+<template>
+  <div v-if="buildOrder" class="container content-container is-max-desktop">
+    <OrderDetail :order="buildOrder" build-order @reload="getBuildOrderById" />
+  </div>
+  <div v-else class="container">
+    <Loader style="min-height: calc(100vh - 3.25rem)" />
+  </div>
+</template>
+
+<script>
+import { getBuildOrderById } from '@/api/build-order'
+export default {
+  data: () => ({
+    buildOrder: null,
+  }),
+  mounted() {
+    if (!isNaN(+this.$route.params.id)) {
+      this.getBuildOrderById()
+    } else {
+      this.$router.push('/')
+    }
+  },
+  methods: {
+    getBuildOrderById() {
+      getBuildOrderById(+this.$route.params.id)
+        .then((res) => {
+          this.buildOrder = res.data
+        })
+        .catch((err) => {
+          if (err.response.status === 404) this.$router.push('/')
+        })
+    },
+  },
+}
+</script>

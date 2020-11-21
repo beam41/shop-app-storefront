@@ -131,9 +131,4 @@ export default {
     width: 7rem;
   }
 }
-
-.desc {
-  overflow-wrap: break-word;
-  text-align: justify;
-}
 </style>

@@ -9,3 +9,7 @@ export function placeBuildOrder(data) {
 export function getBuildOrders() {
   return axios.instance.get(`/buildorders/list`)
 }
+
+export function getBuildOrderById(id) {
+  return axios.instance.get(`/buildorders/${id}`)
+}
