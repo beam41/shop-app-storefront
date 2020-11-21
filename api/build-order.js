@@ -13,3 +13,9 @@ export function getBuildOrders() {
 export function getBuildOrderById(id) {
   return axios.instance.get(`/buildorders/${id}`)
 }
+
+export function addProofOfPaymentDeposit(id, data) {
+  return axios.instance.put(`/buildorders/${id}/add-proof-deposit`, data, {
+    'Content-Type': 'multipart/form-data',
+  })
+}

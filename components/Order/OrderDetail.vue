@@ -31,38 +31,43 @@
               {{ headerTextMap(state.state) }}
             </h2>
             <div class="state-data-wrapper">
-              <template v-if="buildOrder">
-                <template v-if="state.state === OrderState.CREATED">
-                  <LazyBuildOrderStateCreated :order="order" />
-                </template>
+              <template v-if="state.state === OrderState.CREATED">
+                <LazyBuildOrderStateCreated v-if="buildOrder" :order="order" />
+                <LazyOrderStateCreated v-else :order="order" />
               </template>
-              <template v-else>
-                <template v-if="state.state === OrderState.CREATED">
-                  <LazyOrderStateCreated :order="order" />
-                </template>
-                <template
-                  v-else-if="
-                    state.state === OrderState.ADDED_PROOF_OF_PAYMENT_FULL
-                  "
-                >
-                  <LazyOrderStateAddProof
-                    :proof="order.proofOfPaymentFullImage"
-                  />
-                </template>
-                <template v-else-if="state.state === OrderState.SENT">
-                  <LazyOrderStateSent :order="order" />
-                </template>
-                <template v-else-if="state.state === OrderState.RECEIVED">
-                  <LazyOrderStateReceived :order="order" />
-                </template>
-                <template
-                  v-else-if="
-                    state.state === OrderState.CANCELLED &&
-                    order.cancelledByAdmin
-                  "
-                >
-                  <LazyOrderStateCancelled :order="order" />
-                </template>
+              <template v-else-if="state.state === OrderState.IS_ABLE_TO_BUILT">
+                <LazyBuildOrderStateIsAbleToBuilt :order="order" />
+              </template>
+              <template
+                v-else-if="
+                  state.state === OrderState.ADDED_PROOF_OF_PAYMENT_DEPOSIT
+                "
+              >
+                <LazyOrderStateAddProof
+                  :proof="order.proofOfPaymentDepositImage"
+                />
+              </template>
+              <template
+                v-else-if="
+                  state.state === OrderState.ADDED_PROOF_OF_PAYMENT_FULL
+                "
+              >
+                <LazyOrderStateAddProof
+                  :proof="order.proofOfPaymentFullImage"
+                />
+              </template>
+              <template v-else-if="state.state === OrderState.SENT">
+                <LazyOrderStateSent :order="order" />
+              </template>
+              <template v-else-if="state.state === OrderState.RECEIVED">
+                <LazyOrderStateReceived :order="order" />
+              </template>
+              <template
+                v-else-if="
+                  state.state === OrderState.CANCELLED && order.cancelledByAdmin
+                "
+              >
+                <LazyOrderStateCancelled :order="order" />
               </template>
             </div>
           </div>
@@ -91,29 +96,47 @@
               {{ headerTextNextMap(state.state) }}
             </h2>
             <div class="state-data-wrapper">
-              <template v-if="buildOrder"></template>
-              <template v-else>
-                <template
-                  v-if="
-                    state.state === OrderState.CREATED &&
-                    order.purchaseMethod !== PurchaseMethod.ON_DELIVERY
-                  "
-                >
-                  <LazyOrderStateCreatedNext
-                    :order="order"
-                    :loading="loading"
-                    @loadState="setLoading"
-                    @reload="$emit('reload')"
-                  />
-                </template>
-                <template v-else-if="state.state === OrderState.SENT">
-                  <LazyOrderStateSentNext
-                    :order="order"
-                    :loading="loading"
-                    @loadState="setLoading"
-                    @reload="$emit('reload')"
-                  />
-                </template>
+              <template
+                v-if="
+                  !buildOrder &&
+                  state.state === OrderState.CREATED &&
+                  order.purchaseMethod !== PurchaseMethod.ON_DELIVERY
+                "
+              >
+                <LazyOrderStateCreatedNext
+                  :order="order"
+                  :loading="loading"
+                  @loadState="setLoading"
+                  @reload="$emit('reload')"
+                />
+              </template>
+              <template v-else-if="state.state === OrderState.IS_ABLE_TO_BUILT">
+                <LazyOrderStateCreatedNext
+                  :order="order"
+                  :loading="loading"
+                  build-order
+                  @loadState="setLoading"
+                  @reload="$emit('reload')"
+                  @cancel="showConfirmDelete = true"
+                />
+              </template>
+              <template
+                v-else-if="
+                  state.state === OrderState.APPROVED_PROOF_OF_PAYMENT_DEPOSIT
+                "
+              >
+                <LazyBuildOrderStateApproveProofDepositNext :order="order" />
+              </template>
+              <template v-else-if="state.state === OrderState.BUILT_COMPLETE">
+                <LazyBuildOrderStateBuiltCompleteNext :order="order" />
+              </template>
+              <template v-else-if="state.state === OrderState.SENT">
+                <LazyOrderStateSentNext
+                  :order="order"
+                  :loading="loading"
+                  @loadState="setLoading"
+                  @reload="$emit('reload')"
+                />
               </template>
             </div>
           </div>
@@ -184,7 +207,7 @@ const headerTextNext = {
       : 'รอการชำระเงิน',
   IS_ABLE_TO_BUILT: () => 'ยืนยันการสั่งทำและโอนเงินมัดจำ',
   ADDED_PROOF_OF_PAYMENT_DEPOSIT: () => 'รอการตรวจสอบสลิปธนาคาร',
-  APPROVED_PROOF_OF_PAYMENT_DEPOSIT: () => 'กำลังทำเครื่องเงินเรียบร้อย',
+  APPROVED_PROOF_OF_PAYMENT_DEPOSIT: () => 'กำลังทำเครื่องเงิน',
   BUILT_COMPLETE: () => 'รอการชำระเงินส่วนที่เหลือ',
   ADDED_PROOF_OF_PAYMENT_FULL: () => 'รอการตรวจสอบสลิปธนาคาร',
   APPROVED_PROOF_OF_PAYMENT_FULL: () => 'รอการจัดส่ง',

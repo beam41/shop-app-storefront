@@ -41,9 +41,15 @@
             >
               ยืนยันการชำระเงิน
             </button>
-            <p class="help is-danger">
-              เมื่อชำระเงินแล้วจะไม่สามารถยกเลิกคำสั่งซื้อได้
-            </p>
+            <p class="help is-danger">เมื่อชำระเงินแล้วจะไม่สามารถยกเลิกได้</p>
+          </div>
+          <div v-if="buildOrder" class="field">
+            <button
+              :class="['button is-light', loading ? 'is-loading' : '']"
+              @click.prevent="$emit('cancel')"
+            >
+              ยกเลิกคำสั่งทำ
+            </button>
           </div>
         </form>
       </template>
@@ -54,6 +60,7 @@
 <script>
 import { getPaymentMethods } from '@/api/payment'
 import { addProofOfPaymentFull } from '@/api/order'
+import { addProofOfPaymentDeposit } from '@/api/build-order'
 export default {
   props: {
     order: {
@@ -61,6 +68,7 @@ export default {
       required: true,
     },
     loading: Boolean,
+    buildOrder: Boolean,
   },
   data: () => ({
     paymentMethods: null,
@@ -84,7 +92,10 @@ export default {
       const form = new FormData()
       form.append('image', this.image)
       this.$emit('loadState', true)
-      addProofOfPaymentFull(this.order.id, form).then((res) => {
+      const f = this.buildOrder
+        ? addProofOfPaymentDeposit
+        : addProofOfPaymentFull
+      f(this.order.id, form).then((res) => {
         this.$emit('loadState', false)
         this.$emit('reload')
       })
