@@ -52,7 +52,9 @@
                   state.state === OrderState.ADDED_PROOF_OF_PAYMENT_FULL
                 "
               >
+                <LazyBuildOrderStateAddProof v-if="buildOrder" :order="order" />
                 <LazyOrderStateAddProof
+                  v-else
                   :proof="order.proofOfPaymentFullImage"
                 />
               </template>
@@ -128,12 +130,18 @@
                 <LazyBuildOrderStateApproveProofDepositNext :order="order" />
               </template>
               <template v-else-if="state.state === OrderState.BUILT_COMPLETE">
-                <LazyBuildOrderStateBuiltCompleteNext :order="order" />
+                <LazyBuildOrderStateBuiltCompleteNext
+                  :order="order"
+                  :loading="loading"
+                  @loadState="setLoading"
+                  @reload="$emit('reload')"
+                />
               </template>
               <template v-else-if="state.state === OrderState.SENT">
                 <LazyOrderStateSentNext
                   :order="order"
                   :loading="loading"
+                  :build-order="buildOrder"
                   @loadState="setLoading"
                   @reload="$emit('reload')"
                 />
@@ -185,22 +193,24 @@ import { cancelled } from '@/api/order'
 import dayjs from 'dayjs'
 
 const headerText = {
-  CREATED: ({ builOrder }) => 'วางคำสั่งซื้อแล้ว',
+  CREATED: ({ buildOrder }) => 'วางคำสั่งซื้อแล้ว',
   IS_ABLE_TO_BUILT: () => 'สามารถทำได้',
   IS_UNABLE_TO_BUILT: () => 'ไม่สามารถทำได้',
   ADDED_PROOF_OF_PAYMENT_DEPOSIT: () => 'เพิ่มสลิปธนาคารแล้ว (มัดจำ)',
   APPROVED_PROOF_OF_PAYMENT_DEPOSIT: () => 'ตรวจสอบสลิปธนาคารแล้ว (มัดจำ)',
   BUILT_COMPLETE: () => 'ทำเครื่องเงินเรียบร้อยแล้ว',
-  ADDED_PROOF_OF_PAYMENT_FULL: () => 'เพิ่มสลิปธนาคารแล้ว',
-  APPROVED_PROOF_OF_PAYMENT_FULL: () => 'ตรวจสอบสลิปธนาคารแล้ว',
+  ADDED_PROOF_OF_PAYMENT_FULL: ({ buildOrder }) =>
+    `เพิ่มสลิปธนาคารแล้ว${buildOrder ? ' (ส่วนที่เหลือ)' : ''}`,
+  APPROVED_PROOF_OF_PAYMENT_FULL: ({ buildOrder }) =>
+    `ตรวจสอบสลิปธนาคารแล้ว${buildOrder ? ' (ส่วนที่เหลือ)' : ''}`,
   SENT: () => 'จัดส่งสินค้าแล้ว',
   RECEIVED: () => 'ได้รับแล้ว',
   CANCELLED: ({ byAdmin }) => (byAdmin ? 'ถูกยกเลิกโดยผู้ขาย' : 'ยกเลิกแล้ว'),
 }
 
 const headerTextNext = {
-  CREATED: ({ builOrder, purchaseMethod }) =>
-    builOrder
+  CREATED: ({ buildOrder, purchaseMethod }) =>
+    buildOrder
       ? 'รอการตอบกลับจากผู้ขาย'
       : purchaseMethod === PurchaseMethod.ON_DELIVERY
       ? 'รอการจัดส่ง'
@@ -236,13 +246,13 @@ export default {
   methods: {
     headerTextMap(state) {
       return headerText[state]({
-        builOrder: this.buildOrder,
+        buildOrder: this.buildOrder,
         byAdmin: this.order.cancelledByAdmin,
       })
     },
     headerTextNextMap(state) {
       return headerTextNext[state]({
-        builOrder: this.buildOrder,
+        buildOrder: this.buildOrder,
         purchaseMethod: this.order.purchaseMethod,
       })
     },

@@ -30,7 +30,8 @@
 </template>
 
 <script>
-import { received } from '@/api/order'
+import { received as orderReceived } from '@/api/order'
+import { received as buildOrderReceived } from '@/api/build-order'
 
 export default {
   props: {
@@ -39,6 +40,7 @@ export default {
       required: true,
     },
     loading: Boolean,
+    buildOrder: Boolean,
   },
   data: () => ({
     message: '',
@@ -46,7 +48,8 @@ export default {
   methods: {
     submit() {
       this.$emit('loadState', true)
-      received(this.order.id, { message: this.message }).then((res) => {
+      const f = this.buildOrder ? buildOrderReceived : orderReceived
+      f(this.order.id, { message: this.message }).then((res) => {
         this.$emit('loadState', false)
         this.$emit('reload')
       })

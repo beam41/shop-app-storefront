@@ -19,3 +19,17 @@ export function addProofOfPaymentDeposit(id, data) {
     'Content-Type': 'multipart/form-data',
   })
 }
+
+export function addProofOfPaymentFull(id, data) {
+  return axios.instance.put(`/buildorders/${id}/add-proof-full`, data, {
+    'Content-Type': 'multipart/form-data',
+  })
+}
+
+export function received(id, data) {
+  return axios.instance.put(`/buildorders/${id}/received`, data)
+}
+
+export function cancelled(id) {
+  return axios.instance.put(`/buildorders/${id}/cancelled/user`)
+}

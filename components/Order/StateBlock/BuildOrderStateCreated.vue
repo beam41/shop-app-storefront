@@ -17,7 +17,7 @@
           v-for="img in order.descriptionImagesUrl"
           :key="img.id"
           class="button image-select"
-          href="img.imageUrl"
+          :href="img.imageUrl"
           target="_blank"
         >
           <figure class="image is-1by1">
