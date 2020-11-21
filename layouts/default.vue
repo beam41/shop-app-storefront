@@ -52,7 +52,10 @@
           </div>
           <template v-else>
             <nuxt-link to="/cart" class="navbar-item">
-              <CartIcon /> ตะกร้าสินค้า
+              <span :class="cart.length > 0 ? 'has-items' : null"
+                ><CartIcon
+              /></span>
+              ตะกร้าสินค้า
             </nuxt-link>
             <div class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link"> <UserIcon /> {{ user.fullName }} </a>
@@ -101,6 +104,7 @@ export default {
   computed: {
     ...mapState({
       user: (state) => state.user.data,
+      cart: (state) => state.cart.items,
     }),
   },
   mounted() {
@@ -119,3 +123,19 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.has-items {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #d32f2f;
+    right: 0;
+    border-radius: 10px;
+  }
+}
+</style>
