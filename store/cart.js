@@ -28,5 +28,5 @@ export const mutations = {
   },
   clear(state) {
     state.items = []
-  }
+  },
 }

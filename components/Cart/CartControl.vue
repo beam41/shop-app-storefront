@@ -39,15 +39,15 @@ export default {
   data: () => ({
     checkout: false,
   }),
-  methods: {
-    setCheckout(state) {
-      this.checkout = state
-    },
-  },
   computed: {
     ...mapState({
       cart: (state) => state.cart.items,
     }),
+  },
+  methods: {
+    setCheckout(state) {
+      this.checkout = state
+    },
   },
 }
 </script>

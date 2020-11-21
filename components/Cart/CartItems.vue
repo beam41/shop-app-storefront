@@ -96,7 +96,6 @@ import { longClickDirective } from 'vue-long-click'
 import { nullish } from '@/utils/nullish'
 import { stringPrice } from '@/utils/string-price'
 
-
 export default {
   components: {
     DeleteIcon,
@@ -123,7 +122,7 @@ export default {
       this.$store.commit('cart/editAmount', { id, newAmount: e.target.value })
     },
     nullish,
-    stringPrice
+    stringPrice,
   },
 }
 </script>

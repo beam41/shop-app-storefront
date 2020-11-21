@@ -25,7 +25,6 @@ export default {
       getOrderById(+this.$route.params.id)
         .then((res) => {
           this.order = res.data
-          console.log(this.order)
         })
         .catch((err) => {
           if (err.response.status === 404) this.$router.push('/')

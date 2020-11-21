@@ -69,7 +69,6 @@ import RemoveIcon from '@/assets/images/remove-black-18dp.svg?inline'
 import { longClickDirective } from 'vue-long-click'
 import { stringPrice } from '@/utils/string-price'
 
-
 export default {
   components: {
     ChevronLeft,
@@ -118,7 +117,7 @@ export default {
         amount: +this.amount,
       })
     },
-    stringPrice
+    stringPrice,
   },
 }
 </script>

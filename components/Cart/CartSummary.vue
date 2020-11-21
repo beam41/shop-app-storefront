@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     nullish,
-    stringPrice
+    stringPrice,
   },
 }
 </script>
