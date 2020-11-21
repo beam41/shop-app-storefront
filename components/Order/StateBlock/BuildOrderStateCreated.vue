@@ -11,7 +11,7 @@
       </p>
     </div>
     <div v-if="order.descriptionImagesUrl.length > 0" class="desc-img">
-      <h3 class="has-text-grey">รูปประกอบคำอธิบาย</h3>
+      <h3 class="has-text-grey mb-1">รูปประกอบคำอธิบาย</h3>
       <div class="buttons">
         <a
           v-for="img in order.descriptionImagesUrl"

@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submit">
+  <form @submit.prevent="showConfirm = true">
     <div class="mb-2">
       <h3>ที่อยู่สำหรับการจัดส่ง</h3>
       <div class="field is-horizontal">
@@ -190,6 +190,50 @@
         </div>
       </div>
     </div>
+    <div class="pay mb-2">
+      <table class="table is-fullwidth is-hoverable has-text-grey-dark mb-0">
+        <tbody>
+          <tr class="table-item">
+            <td colspan="3" class="pl-0">ราคาที่ประเมินได้</td>
+            <td class="pr-0 has-text-right">
+              {{ stringPrice(order.fullPrice) }}
+              บาท
+            </td>
+          </tr>
+          <tr class="table-item">
+            <td colspan="3" class="pl-0">หักราคามัดจำ</td>
+            <td class="pr-0 has-text-right">
+              -{{ stringPrice(order.depositPrice) }}
+              บาท
+            </td>
+          </tr>
+          <tr class="table-item">
+            <td colspan="3" class="pl-0">
+              วิธีการจัดส่ง:
+              {{
+                field.distributionMethodId
+                  ? distributionMethod.name
+                  : 'กรุณาเลือก'
+              }}
+            </td>
+            <td class="pr-0 has-text-right">
+              {{
+                stringPrice(
+                  field.distributionMethodId ? distributionMethod.price : 0
+                )
+              }}
+              บาท
+            </td>
+          </tr>
+          <tr class="table-item">
+            <td colspan="3" class="pl-0">รวม</td>
+            <td class="pr-0 has-text-right">
+              {{ stringPrice(summation) }} บาท
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <div class="payment-method">
       <h3 class="mb-2">กรุณาโอนมายัง</h3>
       <Loader v-if="paymentMethods === null" style="min-height: 100px" />
@@ -238,6 +282,43 @@
         </div>
       </template>
     </div>
+    <div v-if="showConfirm" class="modal is-active">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">ยืนยันการชำระเงิน</p>
+          <button
+            class="delete"
+            aria-label="close"
+            :disabled="loading"
+            @click.prevent="showConfirm = false"
+          ></button>
+        </header>
+        <section class="modal-card-body">
+          ยืนยันการชำระเงิน ?
+          <br />
+          เมื่อชำระเงินแล้วจะไม่สามารถยกเลิกได้
+          <figure class="image is-1by1 mt-4">
+            <img :src="url" alt="รูปหลักฐานการชำระเงิน" class="contain" />
+          </figure>
+        </section>
+        <footer class="modal-card-foot field flex">
+          <button
+            class="button"
+            :disabled="loading"
+            @click.prevent="showConfirm = false"
+          >
+            ยกเลิก
+          </button>
+          <button
+            :class="['button is-dark', loading ? 'is-loading' : '']"
+            @click.prevent="submit"
+          >
+            ยืนยัน
+          </button>
+        </footer>
+      </div>
+    </div>
   </form>
 </template>
 
@@ -279,6 +360,8 @@ export default {
     subDistrictList: [],
     init: true,
     distributionMethods: [],
+    showConfirm: false,
+    url: null,
   }),
   computed: {
     imageName() {
@@ -295,6 +378,18 @@ export default {
         filled = false
       }
       return filled
+    },
+    summation() {
+      return (
+        this.order.fullPrice -
+        this.order.depositPrice +
+        (this.field.distributionMethodId ? this.distributionMethod.price : 0)
+      )
+    },
+    distributionMethod() {
+      return this.distributionMethods.find(
+        ({ id }) => id === this.field.distributionMethodId
+      )
     },
   },
   watch: {
@@ -314,6 +409,12 @@ export default {
         this.field.postalCode = this.$store.state.user.data.postalCode
         this.init = false
       }
+    },
+    image(to) {
+      if (this.url) {
+        URL.revokeObjectURL(this.url)
+      }
+      this.url = URL.createObjectURL(to)
     },
   },
   mounted() {

@@ -95,3 +95,7 @@ img {
 a[disabled="disabled"] {
   pointer-events: none;
 }
+
+.contain {
+  object-fit: contain;
+}

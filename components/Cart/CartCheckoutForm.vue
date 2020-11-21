@@ -263,7 +263,7 @@
             กลับ
           </button>
           <button
-            :class="['button is-dark', loading ? 'is-loading' : '']"
+            :class="['button is-dark submit-btn', loading ? 'is-loading' : '']"
             type="submit"
           >
             สั่งซื้อ
@@ -458,4 +458,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.submit-btn {
+  margin-left: auto;
+}
+</style>

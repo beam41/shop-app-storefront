@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="proof-of-payment">
-      <form @submit.prevent="submit">
+      <form @submit.prevent="showConfirm = true">
         <div class="field">
           <label for="msg_to" class="label">ข้อความถึงผู้ขาย</label>
           <div class="control">
@@ -26,6 +26,36 @@
         </div>
       </form>
     </div>
+    <div v-if="showConfirm" class="modal is-active">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">ยืนยันการรับสินค้า</p>
+          <button
+            class="delete"
+            aria-label="close"
+            :disabled="loading"
+            @click="showConfirm = false"
+          ></button>
+        </header>
+        <section class="modal-card-body">ขอบคุณที่ซื้อสินค้ากับเรา</section>
+        <footer class="modal-card-foot field flex">
+          <button
+            class="button"
+            :disabled="loading"
+            @click="showConfirm = false"
+          >
+            ยกเลิก
+          </button>
+          <button
+            :class="['button is-dark', loading ? 'is-loading' : '']"
+            @click="submit"
+          >
+            ยืนยัน
+          </button>
+        </footer>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -44,6 +74,7 @@ export default {
   },
   data: () => ({
     message: '',
+    showConfirm: false,
   }),
   methods: {
     submit() {

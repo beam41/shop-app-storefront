@@ -13,7 +13,7 @@
             </p>
           </li>
         </ul>
-        <form class="mt-4" @submit.prevent="submit">
+        <form class="mt-4" @submit.prevent="showConfirm = true">
           <div class="field">
             <div class="file is-light has-name">
               <label class="file-label">
@@ -54,6 +54,43 @@
         </form>
       </template>
     </div>
+    <div v-if="showConfirm" class="modal is-active">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">ยืนยันการชำระเงิน</p>
+          <button
+            class="delete"
+            aria-label="close"
+            :disabled="loading"
+            @click="showConfirm = false"
+          ></button>
+        </header>
+        <section class="modal-card-body">
+          ยืนยันการชำระเงิน ?
+          <br />
+          เมื่อชำระเงินแล้วจะไม่สามารถยกเลิกได้
+          <figure class="image is-1by1 mt-4">
+            <img :src="url" alt="รูปหลักฐานการชำระเงิน" class="contain" />
+          </figure>
+        </section>
+        <footer class="modal-card-foot field flex">
+          <button
+            class="button"
+            :disabled="loading"
+            @click="showConfirm = false"
+          >
+            ยกเลิก
+          </button>
+          <button
+            :class="['button is-dark', loading ? 'is-loading' : '']"
+            @click="submit"
+          >
+            ยืนยัน
+          </button>
+        </footer>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -73,10 +110,20 @@ export default {
   data: () => ({
     paymentMethods: null,
     image: null,
+    showConfirm: false,
+    url: null,
   }),
   computed: {
     imageName() {
       return this.image ? this.image.name : 'กรุณาเลือกไฟล์'
+    },
+  },
+  watch: {
+    image(to) {
+      if (this.url) {
+        URL.revokeObjectURL(this.url)
+      }
+      this.url = URL.createObjectURL(to)
     },
   },
   mounted() {
@@ -97,6 +144,7 @@ export default {
         : addProofOfPaymentFull
       f(this.order.id, form).then((res) => {
         this.$emit('loadState', false)
+        this.showConfirm = false
         this.$emit('reload')
       })
     },

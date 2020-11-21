@@ -66,7 +66,9 @@
               </template>
               <template
                 v-else-if="
-                  state.state === OrderState.CANCELLED && order.cancelledByAdmin
+                  (state.state === OrderState.CANCELLED &&
+                    order.cancelledByAdmin) ||
+                  state.state === OrderState.IS_UNABLE_TO_BUILT
                 "
               >
                 <LazyOrderStateCancelled :order="order" />
