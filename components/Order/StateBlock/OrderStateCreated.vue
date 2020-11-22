@@ -46,6 +46,8 @@
     <div class="address">
       <h3 class="has-text-grey">ที่อยู่สำหรับการจัดส่ง</h3>
       <p>
+        {{ order.fullName }}
+        <br />
         {{ order.address }}
         <br />
         {{ subDistTxt }} {{ order.subDistrict }} {{ distTxt }}
