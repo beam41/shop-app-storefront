@@ -23,9 +23,9 @@
           </div>
           <div class="state-data flex-1">
             <time
-              :datetime="state.createdAt.toString()"
+              :datetime="state.createdDate.toString()"
               class="has-text-grey is-size-7"
-              >{{ dayjs(state.createdAt).format('D MMM BB H:mm') }}</time
+              >{{ dayjs(state.createdDate).format('D MMM BB H:mm') }}</time
             >
             <h2 class="has-text-grey-darker has-text-weight-medium">
               {{ headerTextMap(state.state) }}
@@ -92,9 +92,9 @@
           </div>
           <div class="state-data flex-1">
             <time
-              :datetime="state.createdAt.toString()"
+              :datetime="state.createdDate.toString()"
               class="has-text-grey is-size-7"
-              >{{ dayjs(state.createdAt).format('D MMM BB H:mm') }}</time
+              >{{ dayjs(state.createdDate).format('D MMM BB H:mm') }}</time
             >
             <h2 class="has-text-grey-darker has-text-weight-medium">
               {{ headerTextNextMap(state.state) }}
