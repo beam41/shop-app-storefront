@@ -3,7 +3,7 @@
     <h1
       class="has-text-grey-darker text-margin-half is-size-3 has-text-centered has-text-weight-medium"
     >
-      คำสั่งซื้อที่ {{ order.id }}
+      คำสั่ง{{ buildOrder ? 'ทำ' : 'ซื้อ' }}ที่ {{ order.id }}
     </h1>
     <div v-if="lastOrderState === OrderState.CREATED" class="cancel-wrapper">
       <a
@@ -11,7 +11,7 @@
         :disabled="loading"
         @click="showConfirmDelete = true"
       >
-        ยกเลิกคำสั่งซื้อ
+        ยกเลิกคำสั่ง{{ buildOrder ? 'ทำ' : 'ซื้อ' }}
       </a>
     </div>
     <div class="state-block-wrapper">
@@ -157,7 +157,9 @@
       <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
-          <p class="modal-card-title">ยืนยันการยกเลิกคำสั่งซื้อ</p>
+          <p class="modal-card-title">
+            ยืนยันการยกเลิกคำสั่ง{{ buildOrder ? 'ทำ' : 'ซื้อ' }}
+          </p>
           <button
             class="delete"
             aria-label="close"
@@ -166,7 +168,8 @@
           ></button>
         </header>
         <section class="modal-card-body">
-          ยืนยันการยกเลิกคำสั่งซื้อ ? เมื่อตกลงแล้วจะไม่สามารถเปลี่ยนแปลงได้
+          ยืนยันการยกเลิกคำสั่ง{{ buildOrder ? 'ทำ' : 'ซื้อ' }} ?
+          เมื่อตกลงแล้วจะไม่สามารถเปลี่ยนแปลงได้
         </section>
         <footer class="modal-card-foot field flex">
           <button
@@ -191,11 +194,12 @@
 <script>
 import OrderState from '@/constant/order-state'
 import PurchaseMethod from '@/constant/purchase-method'
-import { cancelled } from '@/api/order'
+import { cancelled as cancelledOrder } from '@/api/order'
+import { cancelled as cancelledBuildOrder } from '@/api/build-order'
 import dayjs from 'dayjs'
 
 const headerText = {
-  CREATED: ({ buildOrder }) => 'วางคำสั่งซื้อแล้ว',
+  CREATED: ({ buildOrder }) => `วางคำสั่ง${buildOrder ? 'ทำ' : 'ซื้อ'}แล้ว`,
   IS_ABLE_TO_BUILT: () => 'สามารถทำได้',
   IS_UNABLE_TO_BUILT: () => 'ไม่สามารถทำได้',
   ADDED_PROOF_OF_PAYMENT_DEPOSIT: () => 'เพิ่มสลิปธนาคารแล้ว (มัดจำ)',
@@ -260,6 +264,7 @@ export default {
     },
     cancelOrder() {
       this.loading = true
+      const cancelled = this.buildOrder ? cancelledBuildOrder : cancelledOrder
       cancelled(this.order.id)
         .then((res) => {
           this.$router.push('/')
