@@ -25,5 +25,8 @@ export default {
       this.promotions = res.data
     })
   },
+  head: () => ({
+    title: 'โปรโมชัน',
+  }),
 }
 </script>

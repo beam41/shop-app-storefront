@@ -13,8 +13,13 @@ export default {
   data: () => ({
     order: null,
   }),
+  computed: {
+    currId() {
+      return this.$route.params.id
+    },
+  },
   mounted() {
-    if (!isNaN(+this.$route.params.id)) {
+    if (!isNaN(+this.currId)) {
       this.getOrderById()
     } else {
       this.$router.push('/')
@@ -22,7 +27,7 @@ export default {
   },
   methods: {
     getOrderById() {
-      getOrderById(+this.$route.params.id)
+      getOrderById(+this.currId)
         .then((res) => {
           this.order = res.data
         })
@@ -31,5 +36,8 @@ export default {
         })
     },
   },
+  head: (vm) => ({
+    title: `คำสั่งซื้อที่ ${vm.currId}`,
+  }),
 }
 </script>

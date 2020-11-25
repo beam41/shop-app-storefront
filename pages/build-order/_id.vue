@@ -13,8 +13,13 @@ export default {
   data: () => ({
     buildOrder: null,
   }),
+  computed: {
+    currId() {
+      return this.$route.params.id
+    },
+  },
   mounted() {
-    if (!isNaN(+this.$route.params.id)) {
+    if (!isNaN(+this.currId)) {
       this.getBuildOrderById()
     } else {
       this.$router.push('/')
@@ -22,7 +27,7 @@ export default {
   },
   methods: {
     getBuildOrderById() {
-      getBuildOrderById(+this.$route.params.id)
+      getBuildOrderById(+this.currId)
         .then((res) => {
           this.buildOrder = res.data
         })
@@ -31,5 +36,8 @@ export default {
         })
     },
   },
+  head: (vm) => ({
+    title: `คำสั่งทำที่ ${vm.currId}`,
+  }),
 }
 </script>

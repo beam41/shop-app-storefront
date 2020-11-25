@@ -29,5 +29,8 @@ export default {
         }
       })
   },
+  head: (vm) => ({
+    title: vm.typeName,
+  }),
 }
 </script>

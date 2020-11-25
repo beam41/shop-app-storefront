@@ -24,5 +24,8 @@ export default {
       this.buildOrders = res.data
     })
   },
+  head: () => ({
+    title: 'รายการสั่งทำ',
+  }),
 }
 </script>

@@ -56,6 +56,9 @@ export default {
       })
     },
   },
+  head: () => ({
+    title: 'หน้าแรก',
+  }),
 }
 </script>
 

@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar is-white">
       <div class="navbar-brand">
-        <nuxt-link class="navbar-item" to="/">Shop-app</nuxt-link>
+        <nuxt-link class="navbar-item" to="/">Growth Silver</nuxt-link>
         <a
           :class="['navbar-burger', 'burger', isActive ? 'is-active' : null]"
           @click="

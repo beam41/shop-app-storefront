@@ -13,9 +13,14 @@ export default {
   data: () => ({
     product: null,
   }),
+  computed: {
+    currId() {
+      return this.$route.params.id
+    },
+  },
   mounted() {
-    if (!isNaN(+this.$route.params.id)) {
-      getProductById(+this.$route.params.id)
+    if (!isNaN(+this.currId)) {
+      getProductById(+this.currId)
         .then((res) => {
           this.product = res.data
         })
@@ -24,6 +29,16 @@ export default {
         })
     } else {
       this.$router.push('/')
+    }
+  },
+  head() {
+    if (this.product === null) {
+      return {
+        title: `สินค้าเลขที่ ${this.currId}`,
+      }
+    }
+    return {
+      title: this.product.name,
     }
   },
 }
