@@ -90,7 +90,7 @@ import { getAllType } from '@/api/type'
 import { mapState } from 'vuex'
 import CartIcon from '@/assets/images/shopping_cart-black-18dp.svg?inline'
 import UserIcon from '@/assets/images/person_outline-black-18dp.svg?inline'
-import AuthPath from '@/constant/auth-path'
+import AuthPath from '@/constants/auth-path'
 
 export default {
   components: {

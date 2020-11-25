@@ -317,7 +317,7 @@ import { stringPrice } from '@/utils/string-price'
 
 import { createOrder } from '@/api/order'
 import { getDistributionMethods } from '@/api/distribution'
-import PurchaseMethod from '@/constant/purchase-method'
+import PurchaseMethod from '@/constants/purchase-method'
 
 export default {
   props: {

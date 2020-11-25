@@ -50,7 +50,7 @@
 
 <script>
 import { stringPrice } from '@/utils/string-price'
-import OrderState from '@/constant/order-state'
+import OrderState from '@/constants/order-state'
 import dayjs from 'dayjs'
 
 export default {

@@ -1,4 +1,4 @@
-import AuthPath from '@/constant/auth-path'
+import AuthPath from '@/constants/auth-path'
 
 export default function ({ route, redirect }) {
   if (process.browser) {

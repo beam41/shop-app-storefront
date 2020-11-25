@@ -192,8 +192,8 @@
 </template>
 
 <script>
-import OrderState from '@/constant/order-state'
-import PurchaseMethod from '@/constant/purchase-method'
+import OrderState from '@/constants/order-state'
+import PurchaseMethod from '@/constants/purchase-method'
 import { cancelled as cancelledOrder } from '@/api/order'
 import { cancelled as cancelledBuildOrder } from '@/api/build-order'
 import dayjs from 'dayjs'
