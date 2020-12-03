@@ -99,4 +99,9 @@ export default {
   generate: {
     fallback: true,
   },
+  pwa: {
+    icon: {
+      source: './static/icon.jpg',
+    },
+  },
 }

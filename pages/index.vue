@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <div class="jumbotron flex flex-align-center flex-justify-end">
-      <div class="jumbotron-title">
-        <h1 class="has-text-grey-darker is-size-1 has-text-weight-medium">
+      <div class="jumbotron-title has-text-white">
+        <h1 class="has-text-white is-size-1 has-text-weight-medium">
           ร้านเครื่องเงิน Growth Silver
         </h1>
         <p>
@@ -64,17 +64,36 @@ export default {
 
 <style lang="scss" scoped>
 .jumbotron {
-  background: #ffffff;
+  background: linear-gradient(
+      to right,
+      #0000 (37.5rem - (37.5rem / 3)),
+      #000 37.5rem
+    ),
+    url(~assets/images/R0015.png) no-repeat left/auto 37.5rem;
   height: 37.5rem;
   padding-right: 180px;
   box-shadow: 0px 4px 4px rgba(10, 10, 10, 0.03);
 }
 
 .jumbotron-title {
-  width: 37rem;
+  max-width: 37rem;
 
   h1 {
     white-space: nowrap;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .jumbotron {
+    padding: 0.5rem;
+    justify-content: center;
+  }
+
+  .jumbotron-title {
+    text-align: center;
+    h1 {
+      white-space: normal;
+    }
   }
 }
 </style>

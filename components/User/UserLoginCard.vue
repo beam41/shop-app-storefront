@@ -2,7 +2,7 @@
   <div class="box login-card">
     <form @submit.prevent="login">
       <div class="field">
-        <img src="@/assets/images/placeholder.jpg" alt="logo" />
+        <img src="@/assets/images/logo.jpg" alt="logo" />
       </div>
       <div class="field">
         <label class="label" for="loginCard_Username">ชื่อผู้ใช้งาน</label>

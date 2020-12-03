@@ -24,7 +24,7 @@ export default {
       this.orders = res.data
     })
   },
-   head: () => ({
+  head: () => ({
     title: 'รายการสั่งซื้อ',
   }),
 }
