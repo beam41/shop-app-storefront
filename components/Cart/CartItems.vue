@@ -79,7 +79,9 @@
             </div>
           </div>
           <div class="flex has-text-right delete-wrapper ml-2">
-            <a><DeleteIcon class="svg-as-font del" /></a>
+            <a @click="removeProduct(item.product.id)"
+              ><DeleteIcon class="svg-as-font del"
+            /></a>
           </div>
         </div>
       </template>
@@ -120,6 +122,9 @@ export default {
     },
     changeAmount(id, e) {
       this.$store.commit('cart/editAmount', { id, newAmount: e.target.value })
+    },
+    removeProduct(id) {
+      this.$store.commit('cart/remove', id)
     },
     nullish,
     stringPrice,

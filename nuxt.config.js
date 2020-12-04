@@ -14,8 +14,8 @@ export default {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    titleTemplate: '%s • Growth Silver',
-    title: 'Growth Silver',
+    titleTemplate: '%s • Growthsilver',
+    title: 'Growthsilver',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
