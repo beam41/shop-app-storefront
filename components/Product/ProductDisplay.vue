@@ -26,6 +26,7 @@
                 <span v-if="item.price" class="old-price"
                   >{{ stringPrice(item.price) }} บาท</span
                 >
+                <br />
                 {{ stringPrice(item.newPrice) }} บาท
               </p>
               <p v-else class="text-price">{{ stringPrice(item.price) }} บาท</p>
@@ -84,6 +85,7 @@ export default {
     border-radius: 4px;
     overflow: hidden;
     display: block;
+    height: 100%;
 
     .text-price {
       color: rgba(74, 74, 74, 0.8);

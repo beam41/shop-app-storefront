@@ -52,7 +52,7 @@
           </div>
           <template v-else>
             <nuxt-link to="/cart" class="navbar-item">
-              <span :class="cart.length > 0 ? 'has-items' : null"
+              <span :class="['span-icon', cart.length > 0 ? 'has-items' : null]"
                 ><CartIcon
               /></span>
               ตะกร้าสินค้า
@@ -137,5 +137,9 @@ export default {
     right: 0;
     border-radius: 10px;
   }
+}
+
+.span-icon {
+  line-height: 0;
 }
 </style>

@@ -458,8 +458,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.submit-btn {
-  margin-left: auto;
-}
-</style>
+<style lang="scss" scoped></style>

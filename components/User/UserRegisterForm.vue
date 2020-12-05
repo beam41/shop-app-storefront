@@ -305,7 +305,7 @@
         กลับ
       </nuxt-link>
       <button
-        :class="['button is-dark', loading ? 'is-loading' : '']"
+        :class="['button is-dark submit-btn', loading ? 'is-loading' : '']"
         type="submit"
       >
         {{ submitText }}
@@ -382,7 +382,7 @@ export default {
         this.field.district,
         to
       )
-      if (this.init) {
+      if (this.init && this.editMode) {
         this.field.postalCode = this.initialValue.postalCode
         this.init = false
       }
