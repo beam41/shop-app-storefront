@@ -7,7 +7,7 @@
         <br />
         เบอร์โทรศัพท์: {{ order.phoneNumber }}
         <br />
-        คำอธิบาย: {{ order.orderDescription }}
+        คำอธิบาย: <span class="pre-wrap">{{ order.orderDescription }}</span>
       </p>
     </div>
     <div v-if="order.descriptionImagesUrl.length > 0" class="desc-img">

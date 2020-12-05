@@ -48,7 +48,7 @@
       <p>
         {{ order.fullName }}
         <br />
-        {{ order.address }}
+        <span class="pre-wrap">{{ order.address }}</span>
         <br />
         {{ subDistTxt }} {{ order.subDistrict }} {{ distTxt }}
         {{ order.district }}

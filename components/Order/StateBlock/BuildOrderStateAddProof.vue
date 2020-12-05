@@ -2,10 +2,10 @@
   <div>
     <div class="address mb-2">
       <h3 class="has-text-grey">ที่อยู่สำหรับการจัดส่ง</h3>
-      <p>
+      <p >
         {{ order.addressFullName }}
         <br />
-        {{ order.address }}
+        <span class="pre-wrap">{{ order.address }}</span>
         <br />
         {{ subDistTxt }} {{ order.subDistrict }} {{ distTxt }}
         {{ order.district }}

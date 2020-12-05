@@ -92,7 +92,7 @@ img {
   margin-left: auto;
 }
 
-a[disabled="disabled"] {
+a[disabled='disabled'] {
   pointer-events: none;
 }
 
@@ -102,4 +102,8 @@ a[disabled="disabled"] {
 
 .submit-btn {
   margin-left: auto;
+}
+
+.pre-wrap {
+  white-space: pre-wrap;
 }

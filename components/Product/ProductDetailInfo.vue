@@ -56,9 +56,10 @@
         </div>
       </div>
     </div>
-    <p v-for="(desc, index) in descArray" :key="index" class="desc">
-      {{ desc }}
-    </p>
+    <!-- prettier-ignore -->
+    <p v-for="(desc, index) in descArray" :key="index" class="desc pre-wrap">{{
+      desc
+    }}</p>
   </div>
 </template>
 
