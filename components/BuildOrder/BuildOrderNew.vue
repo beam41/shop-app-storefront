@@ -177,6 +177,8 @@
 
 <script>
 import { placeBuildOrder } from '@/api/build-order'
+import { mapState } from 'vuex'
+
 export default {
   data: () => ({
     field: {
@@ -202,9 +204,20 @@ export default {
         ? this.imagesNameArr.join(', ')
         : 'ไม่มีรูป'
     },
+    ...mapState({
+      user: (state) => state.user.data,
+    }),
   },
   destroyed() {
     this.revokeImgUrl()
+  },
+  mounted() {
+    this.field = {
+      fullName: this.user.fullName,
+      orderDescription: '',
+      phoneNumber: this.user.phoneNumber,
+      descriptionImages: [],
+    }
   },
   methods: {
     imageUpload(e) {
