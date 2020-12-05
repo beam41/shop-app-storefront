@@ -30,7 +30,7 @@
             <h3 class="has-text-weight-medium is-size-5 has-text-grey-darker">
               {{ item.product.name }}
             </h3>
-            <h4 v-if="item.product.newPrice !== null">
+            <h4 v-if="item.product.newPrice">
               <span class="old-price">{{ item.product.price }}</span>
               {{ stringPrice(item.product.newPrice) }} บาท
             </h4>

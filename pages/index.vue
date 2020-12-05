@@ -21,10 +21,7 @@
         </p>
       </div>
     </div>
-    <div
-      v-if="recommend !== null && typeAndProduct !== null"
-      class="container content-container"
-    >
+    <div v-if="recommend && typeAndProduct" class="container content-container">
       <ProductDisplay header="สินค้าแนะนำ" :items-list="recommend" />
       <div>
         <ProductDisplay
@@ -78,7 +75,7 @@ export default {
       #0000 (37.5rem - (37.5rem / 3)),
       #000 37.5rem
     ),
-    url(~assets/images/R0015.png) no-repeat left/auto 37.5rem;
+    url(~assets/images/R0015.png) no-repeat left/auto 37.5rem, black;
   height: 37.5rem;
   padding-right: 180px;
   box-shadow: 0px 4px 4px rgba(10, 10, 10, 0.03);

@@ -11,10 +11,10 @@
           <div class="flex flex-align-baseline pb-4">
             <h2 class="flex-1 is-size-5 has-text-grey-darker title">
               <template v-if="buildOrder">
-                รหัสสั่งทำที่ {{ i.id }}: {{ i.orderDescription }}
+                รหัสสั่งทำ {{ i.id }}: {{ i.orderDescription }}
               </template>
               <template v-else>
-                รหัสสั่งซื้อที่ {{ i.id }}: {{ i.productsName.join(', ') }}
+                รหัสสั่งซื้อ {{ i.id }}: {{ i.productsName.join(', ') }}
               </template>
             </h2>
             <p class="is-size-7 has-text-grey">

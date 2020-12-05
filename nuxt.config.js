@@ -104,4 +104,7 @@ export default {
       source: './static/icon.jpg',
     },
   },
+  loadingIndicator: {
+    name: 'folding-cube',
+  },
 }

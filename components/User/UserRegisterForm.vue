@@ -396,7 +396,7 @@ export default {
   },
   mounted() {
     this.provinceList = getProvinceList()
-    if (this.initialValue !== null) {
+    if (this.initialValue) {
       this.field = {
         ...this.field,
         ...this.initialValue,

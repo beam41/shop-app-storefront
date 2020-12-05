@@ -37,7 +37,7 @@ export default {
     },
   },
   head: (vm) => ({
-    title: `รหัสสั่งทำที่ ${vm.currId}`,
+    title: `รายการสั่งทำ ${vm.currId}`,
   }),
 }
 </script>

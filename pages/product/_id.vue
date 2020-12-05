@@ -34,7 +34,7 @@ export default {
   head() {
     if (this.product === null) {
       return {
-        title: `สินค้าเลขที่ ${this.currId}`,
+        title: `สินค้ารหัส ${this.currId}`,
       }
     }
     return {
