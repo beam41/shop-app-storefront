@@ -3,7 +3,7 @@
     <h1
       class="has-text-grey-darker text-margin-half is-size-3 has-text-centered has-text-weight-medium"
     >
-      คำสั่ง{{ buildOrder ? 'ทำ' : 'ซื้อ' }}ที่ {{ order.id }}
+      รหัสสั่ง{{ buildOrder ? 'ทำ' : 'ซื้อ' }}ที่ {{ order.id }}
     </h1>
     <div v-if="lastOrderState === OrderState.CREATED" class="cancel-wrapper">
       <a
