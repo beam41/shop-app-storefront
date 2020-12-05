@@ -19,7 +19,7 @@ export default {
     },
   },
   mounted() {
-    if (!isNaN(+this.currId)) {
+    if (this.currId) {
       this.getBuildOrderById()
     } else {
       this.$router.push('/')
@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     getBuildOrderById() {
-      getBuildOrderById(+this.currId)
+      getBuildOrderById(this.currId)
         .then((res) => {
           this.buildOrder = res.data
         })

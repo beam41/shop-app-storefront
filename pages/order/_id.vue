@@ -19,7 +19,7 @@ export default {
     },
   },
   mounted() {
-    if (!isNaN(+this.currId)) {
+    if (this.currId) {
       this.getOrderById()
     } else {
       this.$router.push('/')
@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     getOrderById() {
-      getOrderById(+this.currId)
+      getOrderById(this.currId)
         .then((res) => {
           this.order = res.data
         })

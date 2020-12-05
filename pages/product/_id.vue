@@ -19,8 +19,8 @@ export default {
     },
   },
   mounted() {
-    if (!isNaN(+this.currId)) {
-      getProductById(+this.currId)
+    if (this.currId) {
+      getProductById(this.currId)
         .then((res) => {
           this.product = res.data
         })
