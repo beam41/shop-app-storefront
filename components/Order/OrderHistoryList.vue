@@ -5,9 +5,16 @@
         v-for="i in items"
         :key="i.id"
         :to="`/${buildOrder ? 'build-order' : 'order'}/${i.id}`"
-        class="card orders"
+        :class="[
+          'card orders',
+          i.state === OrderState.CREATED
+            ? buildOrder
+              ? i.state
+              : i.purchaseMethod
+            : i.state,
+        ]"
       >
-        <div class="card-content">
+        <div class="card-content flex-1">
           <div class="flex flex-align-baseline pb-4">
             <h2 class="flex-1 is-size-5 has-text-grey-darker title">
               <template v-if="buildOrder">
@@ -29,7 +36,7 @@
               ราคารวม: {{ stringPrice(i.totalPrice) }} บาท
             </p>
             <p class="flex-1 has-text-right">
-              สถานะ:
+              สถานะ: <span class="status-dot"></span>
               {{
                 i.state === OrderState.CREATED
                   ? buildOrder
@@ -96,10 +103,59 @@ export default {
 .orders {
   border-radius: 4px;
   overflow: hidden;
-  display: block;
+  display: flex;
 
   &:not(:last-child) {
     margin-bottom: 1.5rem;
+  }
+
+  &::before {
+    content: '';
+    width: 10px;
+  }
+
+  .status-dot {
+    display: inline-block;
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 1em;
+  }
+
+  &.BANK,
+  &.IS_ABLE_TO_BUILT,
+  &.BUILT_COMPLETE {
+    & .status-dot,
+    &::before {
+      background: #00c853;
+    }
+  }
+
+  &.RECEIVED {
+    & .status-dot,
+    &::before {
+      background: #a5d6a7;
+    }
+  }
+
+  &.CREATED,
+  &.ON_DELIVERY,
+  &.ADDED_PROOF_OF_PAYMENT_FULL,
+  &.APPROVED_PROOF_OF_PAYMENT_FULL,
+  &.SENT,
+  &.ADDED_PROOF_OF_PAYMENT_DEPOSIT,
+  &.APPROVED_PROOF_OF_PAYMENT_DEPOSIT {
+    & .status-dot,
+    &::before {
+      background: #fff176;
+    }
+  }
+
+  &.CANCELLED,
+  &.IS_UNABLE_TO_BUILT {
+    & .status-dot,
+    &::before {
+      background: #ef9a9a;
+    }
   }
 }
 
